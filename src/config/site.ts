@@ -14,7 +14,7 @@ export const DEPLOY = {
   githubPagesBase: '/espoir-care',
   // Keeps search engines away while the old site is still live.
   // Set to false when you are ready for the new site to be indexed.
-  noindex: true,
+  noindex: false,
 };
 
 // ---------------------------------------------------------------------------
