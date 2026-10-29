@@ -4,11 +4,12 @@ import Icon from '../components/Icon.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import Reviews from '../components/Reviews.astro';
 import FaqList from '../components/FaqList.astro';
-import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import CloudPhoto from '../components/CloudPhoto.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { BUSINESS } from '../config/site';
 import { services, servicePath } from '../data/services';
 import { url } from '../lib/url';
+import handshake from '../assets/photos/support-worker-handshake.jpg';
 
 const faqs = [
   {
@@ -189,8 +190,8 @@ const audiences = [
         <p>We are based in the Redlands and visit homes across Brisbane. We try to keep the same small group of people with each client, so you see familiar faces.</p>
         <p><a class="standalone-link" href={url('/about/')}>About Espoir Care</a></p>
       </div>
-      <!-- TODO: replace with a real team photo -->
-      <PhotoPlaceholder label="Team photo coming soon" />
+      <!-- TODO: stock photo for now. Replace with a real team photo when you have one. -->
+      <CloudPhoto src={handshake} alt="A young man and a support worker smiling as they clasp hands" position="30% 40%" />
     </div>
   </section>
 

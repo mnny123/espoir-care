@@ -1,0 +1,37 @@
+---
+// A photo cut into a cloud shape, with a lavender cloud behind it and a thin
+// purple cloud outline. The shape is one path, used for the mask and the outline.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /* Which part of the photo to keep in view, as a CSS object-position. */
+  position?: string;
+}
+const { src, alt, position = 'center' } = Astro.props;
+
+const CLOUD =
+  'M14 86C4 84 0 72 4 63C0 52 6 40 17 38C16 24 28 14 41 17C48 6 64 4 73 13C85 11 96 21 95 33C101 42 100 56 93 63C99 73 93 87 81 88C74 97 58 98 49 92C38 99 21 96 14 86Z';
+const mask = `url("data:image/svg+xml,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="${CLOUD}"/></svg>`,
+)}")`;
+---
+
+<figure class="cloud-photo" style={`--cloud: ${mask}; --cloud-position: ${position}`}>
+  <svg class="cloud-photo__backdrop" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d={CLOUD} />
+  </svg>
+  <Picture
+    src={src}
+    alt={alt}
+    formats={['avif', 'webp']}
+    widths={[480, 800, src.width].filter((w) => w <= src.width)}
+    sizes="(min-width: 56em) 28rem, calc(100vw - 4rem)"
+    class="cloud-photo__img"
+  />
+  <svg class="cloud-photo__outline" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d={CLOUD} vector-effect="non-scaling-stroke" />
+  </svg>
+</figure>

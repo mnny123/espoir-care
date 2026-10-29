@@ -7,6 +7,7 @@ import Icon from '../../components/Icon.astro';
 import FaqList from '../../components/FaqList.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
+import CloudPhoto from '../../components/CloudPhoto.astro';
 import { services, serviceBySlug, servicePath, type Service } from '../../data/services';
 import { locations, type Location } from '../../data/locations';
 import { rich } from '../../lib/text';
@@ -68,20 +69,23 @@ const props = Astro.props;
             </ol>
           </div>
 
-          <aside class="card card--lavender funding" aria-labelledby="funding-heading">
-            <h2 id="funding-heading">How it is funded</h2>
-            <dl>
-              {props.service.funding.map((f) => (
-                <>
-                  <dt>{f.label}</dt>
-                  <dd set:html={rich(f.text)} />
-                </>
-              ))}
-            </dl>
-            <p class="small">
-              Not sure how your support is funded? <a href={url('/enquire/')}>Ask us</a> and we will help you work it out.
-            </p>
-          </aside>
+          <div class="service-side">
+            {props.service.photo && <CloudPhoto src={props.service.photo.src} alt={props.service.photo.alt} />}
+            <aside class="card card--lavender funding" aria-labelledby="funding-heading">
+              <h2 id="funding-heading">How it is funded</h2>
+              <dl>
+                {props.service.funding.map((f) => (
+                  <>
+                    <dt>{f.label}</dt>
+                    <dd set:html={rich(f.text)} />
+                  </>
+                ))}
+              </dl>
+              <p class="small">
+                Not sure how your support is funded? <a href={url('/enquire/')}>Ask us</a> and we will help you work it out.
+              </p>
+            </aside>
+          </div>
         </div>
       </div>
 

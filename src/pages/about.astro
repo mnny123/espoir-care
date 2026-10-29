@@ -6,6 +6,8 @@ import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
 import { BUSINESS } from '../config/site';
 import { rich } from '../lib/text';
+import CloudPhoto from '../components/CloudPhoto.astro';
+import photoAlbum from '../assets/photos/carer-photo-album.jpg';
 
 const values = [
   { title: 'We listen first', text: 'You know your life best. We ask what matters to you before we suggest anything.' },
@@ -47,8 +49,8 @@ const team = [
         </p>
         <p set:html={rich('[TODO add a few sentences about how and why the business started, in your own words]')} />
       </div>
-      <!-- TODO: replace with a real team photo -->
-      <PhotoPlaceholder label="Team photo coming soon" />
+      <!-- TODO: stock photo for now. Replace with a real team photo when you have one. -->
+      <CloudPhoto src={photoAlbum} alt="An older woman laughing with a carer as they look through a photo album together" />
     </div>
   </section>
 

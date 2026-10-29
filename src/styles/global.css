@@ -519,6 +519,51 @@ strong {
   aspect-ratio: 16 / 7;
 }
 
+/* Cloud photo: the photo, a lavender cloud behind and a purple outline, each
+   nudged a little so the layers show. The padding keeps them inside the box. */
+.cloud-photo {
+  --cloud-pad: var(--space-5);
+  position: relative;
+  margin: 0;
+  padding: var(--cloud-pad);
+}
+
+.cloud-photo__img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: var(--cloud-position);
+  -webkit-mask: var(--cloud) center / 100% 100% no-repeat;
+  mask: var(--cloud) center / 100% 100% no-repeat;
+}
+
+.cloud-photo__backdrop,
+.cloud-photo__outline {
+  position: absolute;
+  top: var(--cloud-pad);
+  left: var(--cloud-pad);
+  width: calc(100% - 2 * var(--cloud-pad));
+  height: calc(100% - 2 * var(--cloud-pad));
+  overflow: visible;
+}
+
+.cloud-photo__backdrop {
+  fill: var(--lavender);
+  transform: translate(calc(var(--cloud-pad) * -0.8), calc(var(--cloud-pad) * 0.8));
+}
+
+.cloud-photo__outline {
+  z-index: 2;
+  fill: none;
+  stroke: var(--purple);
+  stroke-width: 2px;
+  transform: translate(calc(var(--cloud-pad) * 0.6), calc(var(--cloud-pad) * -0.6));
+}
+
 /* ---------- FAQ ---------- */
 .faq {
   border-top: 1px solid var(--border);

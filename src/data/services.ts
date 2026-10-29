@@ -3,6 +3,8 @@
 // Anything written as [TODO ...] shows on the page as a highlighted marker.
 import type { IconName } from '../components/Icon.astro';
 import type { Faq } from '../lib/schema';
+import type { ImageMetadata } from 'astro';
+import cleaningSupplies from '../assets/photos/cleaning-supplies.jpg';
 
 export type Funding = { label: string; text: string };
 
@@ -23,6 +25,8 @@ export type Service = {
   faqs: Faq[];
   related: string[];
   enquireTab?: string;
+  /* Shown above the funding card. */
+  photo?: { src: ImageMetadata; alt: string };
 };
 
 const NDIS_REG_TODO = '[TODO confirm NDIS registration for this service before saying you are registered]';
@@ -521,6 +525,7 @@ export const services: Service[] = [
     metaDescription:
       'Regular home cleaning for people with disability and veterans. Kitchens, bathrooms, floors, washing and fresh bed linen, done the same way each visit.',
     icon: 'spray-can',
+    photo: { src: cleaningSupplies, alt: 'Gloved hands holding a bucket of cleaning sprays and cloths' },
     summary: 'Regular cleaning so your home stays safe, clean and comfortable.',
     intro:
       'Our domestic cleaning service keeps your home clean and safe when doing it yourself is hard because of disability, illness or age.',
