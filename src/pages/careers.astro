@@ -30,7 +30,23 @@ const form = 'careers-form';
     lead="We would like to hear from kind, reliable people who want to help others live well at home."
   />
 
-  <section class="section" aria-labelledby="working-heading">
+  <section class="section" aria-labelledby="vision-heading">
+    <div class="container">
+      <div class="card card--lavender vision prose">
+        <h2 id="vision-heading">Our vision</h2>
+        <p>
+          We want everyone we support to live well at home, with care they trust from people who know them. Espoir means hope, and we want every visit to
+          leave people feeling a bit more hopeful.
+        </p>
+        <p>
+          We also want Espoir Care to be a place where good carers want to stay. That means fair pay, proper training, a team that backs you up and,
+          where we can, the same clients week to week.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight-top" aria-labelledby="working-heading">
     <div class="container prose">
       <h2 id="working-heading">Working at Espoir Care</h2>
       <p>
@@ -141,3 +157,16 @@ const form = 'careers-form';
     </div>
   </section>
 </Base>
+
+<style>
+  .vision {
+    max-width: 48em;
+  }
+  .vision p:last-child {
+    margin-bottom: 0;
+  }
+  /* The vision section above already gives this section space. */
+  .tight-top {
+    padding-top: 0;
+  }
+</style>
