@@ -26,7 +26,7 @@ export const WEB3FORMS_ACCESS_KEY = '2dbe8278-b79c-44c4-bee3-90cdd8fff22c';
 
 // Paste your Google Analytics 4 measurement ID here (it looks like G-XXXXXXX).
 // Analytics never loads while this is still the placeholder.
-export const GA_MEASUREMENT_ID = 'GA_MEASUREMENT_ID';
+export const GA_MEASUREMENT_ID = 'G-6B04YJP4T8';
 
 // ---------------------------------------------------------------------------
 // Feature switches

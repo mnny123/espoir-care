@@ -67,7 +67,7 @@ Almost everything lives in **`src/config/site.ts`**. Each `[TODO ...]` shows on 
 | Placeholder | What to put |
 | --- | --- |
 | `WEB3FORMS_ACCESS_KEY` | Done. Linked to info@beinghumancare.com.au. |
-| `GA_MEASUREMENT_ID` | Your Google Analytics 4 ID (looks like `G-XXXXXXX`). Analytics never loads while this is the placeholder. |
+| `GA_MEASUREMENT_ID` | Done (G-6B04YJP4T8). Loads only after a visitor clicks "Accept analytics". |
 | `abn` | Done (40 703 074 275) |
 | `ndisRegNumber` | `[TODO NDIS REG NUMBER]` |
 | `dvaProviderNumber` | `[TODO DVA PROVIDER NUMBER]`, shown on the About page |
@@ -198,7 +198,7 @@ Every text and background pair used on the site, checked with the WCAG formula. 
 | Service | When | Why |
 | --- | --- | --- |
 | **Web3Forms** (api.web3forms.com) | Only when someone sends a form | Emails form submissions to info@beinghumancare.com.au |
-| **Google Analytics 4** (www.googletagmanager.com, www.google-analytics.com) | Only after someone clicks "Accept analytics", and only once a real measurement ID is set | Visitor statistics. Consent Mode v2 starts with everything denied, and advertising signals stay denied even after acceptance. |
+| **Google Analytics 4** (www.googletagmanager.com, www.google-analytics.com) | Only after someone clicks "Accept analytics" | Visitor statistics. Consent Mode v2 starts with everything denied, and advertising signals stay denied even after acceptance. |
 | **Outbound links** | Only when clicked | Facebook, Instagram, LinkedIn, Google Business profile, NDIS Commission, NDIS, DVA, OAIC, Health Ombudsman, Carer Gateway, Disability Advocacy Finder, Human Rights Commission, National Relay Service |
 
 There are no other scripts, pixels, maps or embeds. Fonts (Figtree, through Fontsource) and icons (Lucide, inline SVG) are bundled into the site, so no requests go to Google Fonts or any CDN. GitHub Pages hosts the site.
