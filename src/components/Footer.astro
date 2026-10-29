@@ -1,7 +1,6 @@
 ---
 import { BUSINESS } from '../config/site';
 import { services, servicePath } from '../data/services';
-import { locations } from '../data/locations';
 import { url } from '../lib/url';
 import { rich } from '../lib/text';
 import Icon from './Icon.astro';
@@ -12,7 +11,7 @@ const legal = [
   { label: 'Refund and cancellation policy', href: '/refund-and-cancellation-policy/' },
   { label: 'Cookie policy', href: '/cookie-policy/' },
   { label: 'Accessibility statement', href: '/accessibility/' },
-  { label: 'Complaints and feedback', href: '/complaints-and-feedback/' },
+  { label: 'Feedback and complaints policy', href: '/complaints-and-feedback/' },
 ];
 ---
 
@@ -73,16 +72,6 @@ const legal = [
       </div>
 
       <div>
-        <h2 class="footer-heading">Areas we cover</h2>
-        <ul class="footer-links">
-          {
-            locations.map((l) => (
-              <li>
-                <a href={url(servicePath(l.slug))}>{l.name}</a>
-              </li>
-            ))
-          }
-        </ul>
         <h2 class="footer-heading">Information</h2>
         <ul class="footer-links">
           <li><a href={url('/about/')}>About us</a></li>

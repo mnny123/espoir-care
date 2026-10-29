@@ -1,6 +1,6 @@
 ---
-// Builds every service page and every location page. Both live under
-// /services/ because that is where the old site had them.
+// Builds every service page. They live under /services/ because that is
+// where the old site had them.
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Icon from '../../components/Icon.astro';
@@ -9,200 +9,103 @@ import CtaBand from '../../components/CtaBand.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
 import CloudPhoto from '../../components/CloudPhoto.astro';
 import { services, serviceBySlug, servicePath, type Service } from '../../data/services';
-import { locations, type Location } from '../../data/locations';
 import { rich } from '../../lib/text';
 import { url } from '../../lib/url';
 
 export function getStaticPaths() {
-  return [
-    ...services.map((service) => ({ params: { slug: service.slug }, props: { kind: 'service' as const, service } })),
-    ...locations.map((location) => ({ params: { slug: location.slug }, props: { kind: 'location' as const, location } })),
-  ];
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
 }
 
-type Props = { kind: 'service'; service: Service } | { kind: 'location'; location: Location };
-const props = Astro.props;
+type Props = { service: Service };
+const { service } = Astro.props;
 ---
 
-{
-  props.kind === 'service' ? (
-    <Base
-      title={props.service.metaTitle}
-      description={props.service.metaDescription}
-      crumbs={[
-        { label: 'Services', href: '/services/' },
-        { label: props.service.name, href: servicePath(props.service.slug) },
-      ]}
-      faqs={props.service.faqs}
-    >
-      <PageHeader title={props.service.title} lead={props.service.intro}>
-        <div class="btn-row header-actions">
-          <a class="btn btn--primary" href={url(`/enquire/${props.service.enquireTab ? `#${props.service.enquireTab}` : ''}`)}>
-            Make an enquiry
-          </a>
-        </div>
-      </PageHeader>
+<Base
+  title={service.metaTitle}
+  description={service.metaDescription}
+  crumbs={[
+    { label: 'Services', href: '/services/' },
+    { label: service.name, href: servicePath(service.slug) },
+  ]}
+  faqs={service.faqs}
+>
+  <PageHeader title={service.title} lead={service.intro}>
+    <div class="btn-row header-actions">
+      <a class="btn btn--primary" href={url(`/enquire/${service.enquireTab ? `#${service.enquireTab}` : ''}`)}>
+        Make an enquiry
+      </a>
+    </div>
+  </PageHeader>
 
-      <div class="section">
-        <div class="container split">
-          <div class="prose">
-            <h2>What it is</h2>
-            {props.service.whatItIs.map((p) => (
-              <p set:html={rich(p)} />
-            ))}
+  <div class="section">
+    <div class="container split">
+      <div class="prose">
+        <h2>What it is</h2>
+        {service.whatItIs.map((p) => (
+          <p set:html={rich(p)} />
+        ))}
 
-            <h2>Who it is for</h2>
-            <ul class="check-list">
-              {props.service.whoFor.map((w) => (
-                <li>
-                  <Icon name="check" size={22} />
-                  <span set:html={rich(w)} />
-                </li>
-              ))}
-            </ul>
+        <h2>Who it is for</h2>
+        <ul class="check-list">
+          {service.whoFor.map((w) => (
+            <li>
+              <Icon name="check" size={22} />
+              <span set:html={rich(w)} />
+            </li>
+          ))}
+        </ul>
 
-            <h2>{props.service.typicalHeading}</h2>
-            <ol class="typical">
-              {props.service.typical.map((t) => (
-                <li set:html={rich(t)} />
-              ))}
-            </ol>
-          </div>
-
-          <div class="service-side">
-            {props.service.photo && <CloudPhoto src={props.service.photo.src} alt={props.service.photo.alt} />}
-            <aside class="card card--lavender funding" aria-labelledby="funding-heading">
-              <h2 id="funding-heading">How it is funded</h2>
-              <dl>
-                {props.service.funding.map((f) => (
-                  <>
-                    <dt>{f.label}</dt>
-                    <dd set:html={rich(f.text)} />
-                  </>
-                ))}
-              </dl>
-              <p class="small">
-                Not sure how your support is funded? <a href={url('/enquire/')}>Ask us</a> and we will help you work it out.
-              </p>
-            </aside>
-          </div>
-        </div>
+        <h2>{service.typicalHeading}</h2>
+        <ol class="typical">
+          {service.typical.map((t) => (
+            <li set:html={rich(t)} />
+          ))}
+        </ol>
       </div>
 
-      <section class="section section--lilac" aria-labelledby="faq-heading">
-        <div class="container">
-          <h2 id="faq-heading">Questions people ask</h2>
-          <FaqList faqs={props.service.faqs} />
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="related-heading">
-        <div class="container">
-          <h2 id="related-heading">Related services</h2>
-          <div class="grid grid--3">
-            {props.service.related.map((slug) => (
-              <ServiceCard service={serviceBySlug(slug)} />
+      <div class="service-side">
+        {service.photo && <CloudPhoto src={service.photo.src} alt={service.photo.alt} />}
+        <aside class="card card--lavender funding" aria-labelledby="funding-heading">
+          <h2 id="funding-heading">How it is funded</h2>
+          <dl>
+            {service.funding.map((f) => (
+              <>
+                <dt>{f.label}</dt>
+                <dd set:html={rich(f.text)} />
+              </>
             ))}
-          </div>
-          <h2 class="areas-heading">Areas we cover</h2>
-          <ul class="link-list">
-            {locations.map((l) => (
-              <li>
-                <a href={url(servicePath(l.slug))}>{l.name}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <CtaBand
-        heading={`Ask us about ${props.service.name.charAt(0).toLowerCase()}${props.service.name.slice(1)}`}
-        enquireHref={`/enquire/${props.service.enquireTab ? `#${props.service.enquireTab}` : ''}`}
-      />
-    </Base>
-  ) : (
-    <Base
-      title={props.location.metaTitle}
-      description={props.location.metaDescription}
-      crumbs={[
-        { label: 'Services', href: '/services/' },
-        { label: props.location.name, href: servicePath(props.location.slug) },
-      ]}
-      faqs={props.location.faqs}
-    >
-      <PageHeader title={props.location.title} lead={props.location.intro}>
-        <div class="btn-row header-actions">
-          <a class="btn btn--primary" href={url('/enquire/')}>
-            Make an enquiry
-          </a>
-        </div>
-      </PageHeader>
-
-      <div class="section">
-        <div class="container split">
-          <div class="prose">
-            <h2>Support in {props.location.name}</h2>
-            {props.location.about.map((p) => (
-              <p set:html={rich(p)} />
-            ))}
-
-            <h2>How we get to you</h2>
-            {props.location.gettingThere.map((p) => (
-              <p set:html={rich(p)} />
-            ))}
-          </div>
-
-          <aside class="card card--lavender" aria-labelledby="suburbs-heading">
-            <h2 id="suburbs-heading">Suburbs we visit</h2>
-            <ul class="suburbs">
-              {props.location.suburbs.map((s) => (
-                <li>{s}</li>
-              ))}
-            </ul>
-            <p class="small" set:html={rich(props.location.suburbsNote)} />
-            <p class="small">Not on the list? Call us with your suburb and we will let you know if we can help.</p>
-          </aside>
-        </div>
-      </div>
-
-      <section class="section section--lilac" aria-labelledby="popular-heading">
-        <div class="container">
-          <div class="section-intro">
-            <h2 id="popular-heading">Services people in {props.location.name} often ask about</h2>
-            <p set:html={rich(props.location.popularNote)} />
-          </div>
-          <div class="grid grid--3">
-            {props.location.popularServices.map((slug) => (
-              <ServiceCard service={serviceBySlug(slug)} />
-            ))}
-          </div>
-          <p class="all-services">
-            <a class="standalone-link" href={url('/services/')}>See all our services</a>
+          </dl>
+          <p class="small">
+            Not sure how your support is funded? <a href={url('/enquire/')}>Ask us</a> and we will help you work it out.
           </p>
-        </div>
-      </section>
+        </aside>
+      </div>
+    </div>
+  </div>
 
-      <section class="section" aria-labelledby="faq-heading">
-        <div class="container">
-          <h2 id="faq-heading">Questions about {props.location.name}</h2>
-          <FaqList faqs={props.location.faqs} />
-          <h2 class="areas-heading">Other areas we cover</h2>
-          <ul class="link-list">
-            {locations
-              .filter((l) => l.slug !== props.location.slug)
-              .map((l) => (
-                <li>
-                  <a href={url(servicePath(l.slug))}>{l.name}</a>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </section>
+  <section class="section section--lilac" aria-labelledby="faq-heading">
+    <div class="container">
+      <h2 id="faq-heading">Questions people ask</h2>
+      <FaqList faqs={service.faqs} />
+    </div>
+  </section>
 
-      <CtaBand heading={`Get support in ${props.location.name}`} />
-    </Base>
-  )
-}
+  <section class="section" aria-labelledby="related-heading">
+    <div class="container">
+      <h2 id="related-heading">Related services</h2>
+      <div class="grid grid--3">
+        {service.related.map((slug) => (
+          <ServiceCard service={serviceBySlug(slug)} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading={`Ask us about ${service.name.charAt(0).toLowerCase()}${service.name.slice(1)}`}
+    enquireHref={`/enquire/${service.enquireTab ? `#${service.enquireTab}` : ''}`}
+  />
+</Base>
 
 <style>
   .header-actions {
@@ -231,25 +134,8 @@ const props = Astro.props;
   .funding dd {
     margin: var(--space-1) 0 0;
   }
-  .suburbs {
-    columns: 2;
-    column-gap: var(--space-5);
-    padding-left: 1.1em;
-  }
-  .suburbs li {
-    break-inside: avoid;
-    margin: 0 0 var(--space-1);
-  }
-  .areas-heading {
-    margin-top: var(--space-7);
-    font-size: 1.375rem;
-  }
-  .all-services {
-    margin-top: var(--space-5);
-    font-weight: 700;
-  }
   @media (min-width: 56em) {
-    aside.card {
+    .service-side {
       position: sticky;
       top: var(--space-5);
     }

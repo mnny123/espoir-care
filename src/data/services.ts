@@ -29,8 +29,10 @@ export type Service = {
   photo?: { src: ImageMetadata; alt: string };
 };
 
-const NDIS_REG_TODO = '[TODO confirm NDIS registration for this service before saying you are registered]';
-const PRIVATE = { label: 'Private', text: 'You can pay for this service yourself. [TODO add private rates or say how quotes work]' };
+const PRIVATE = {
+  label: 'Private',
+  text: 'You can pay for this service yourself. Our private rates follow the NDIS Pricing Arrangements, the same as for NDIS participants. We confirm the cost with you before we start.',
+};
 
 export const services: Service[] = [
   {
@@ -47,8 +49,7 @@ export const services: Service[] = [
     whatItIs: [
       'SIL pays for support workers to help with the things you do at home every day. That might be getting ready in the morning, cooking, cleaning, taking medication on time or getting to appointments.',
       'The aim is for you to do as much as you can for yourself, with someone there when you need a hand. Support can be there day and night if your plan includes it.',
-      'Espoir Care is a registered NDIS provider for SIL, under registration group 0115 (daily tasks and shared living).',
-      '[TODO say where your SIL homes are, how many people live in each and whether you have vacancies]',
+      'Espoir Care is a registered NDIS provider for SIL, under registration group 0138 (assistance with supported independent living).',
     ],
     whoFor: [
       'Adults with disability who have SIL funding in their NDIS plan',
@@ -103,8 +104,7 @@ export const services: Service[] = [
     whatItIs: [
       'During a stay we take care of your support, meals and activities, just like at home. You bring your things and your routines and we fit around them.',
       'A stay can be planned ahead, for example while a carer goes on holiday. It can also help when something unexpected comes up.',
-      '[TODO say where STA stays take place, what the home is like and whether it is shared]',
-      NDIS_REG_TODO,
+      'Espoir Care is a registered NDIS provider for short term accommodation, under registration group 0115 (daily tasks and shared living).',
     ],
     whoFor: [
       'NDIS participants with short term accommodation in their plan',
@@ -123,7 +123,6 @@ export const services: Service[] = [
         label: 'NDIS',
         text: 'STA is funded from the core supports in your NDIS plan. It usually covers your support, accommodation, food and activities during the stay. How many days you can use depends on your plan.',
       },
-      { label: 'Private', text: '[TODO confirm whether you offer private short stays and how they are priced]' },
     ],
     faqs: [
       {
@@ -157,9 +156,10 @@ export const services: Service[] = [
     intro:
       'Community nursing means a registered or enrolled nurse comes to your home to give you clinical care, so you do not have to travel to a clinic or stay in hospital longer than you need to.',
     whatItIs: [
-      'Our nurses look after health needs that call for a qualified nurse. This can include wound care, medication management, catheter and continence care, bowel care, diabetes support, tube feeding and checking how you are going between doctor visits.',
+      'Our nurses look after health needs that call for a qualified nurse. This includes wound care, medication management, continence assessments, catheter care, tracheostomy care, ventilator management and risk assessments.',
+      'Our nurses also write your care plan and train the support workers who help you, so everyone caring for you knows what to do.',
       'We keep in touch with your GP and other health workers, so everyone knows what is happening.',
-      '[TODO confirm the nursing tasks your team provides and your NDIS registration group for community nursing care]',
+      'Espoir Care is a registered NDIS provider for community nursing care, under registration group 0114.',
     ],
     whoFor: [
       'NDIS participants who have disability related health supports in their plan',
@@ -176,7 +176,7 @@ export const services: Service[] = [
     funding: [
       {
         label: 'NDIS',
-        text: `Nursing for disability related health needs can be funded by the NDIS when it is in your plan. ${NDIS_REG_TODO}`,
+        text: 'Nursing for disability related health needs can be funded by the NDIS when it is in your plan.',
       },
       { label: 'DVA', text: 'Eligible veterans can have community nursing paid for by DVA. See our DVA community nursing page for how it works.' },
       PRIVATE,
@@ -237,7 +237,7 @@ export const services: Service[] = [
       },
       {
         label: "Veterans' Home Care",
-        text: "Veterans' Home Care services start after an assessment arranged through DVA. Some services have a small co-payment. [TODO confirm the current Veterans' Home Care co-payment rules]",
+        text: "Veterans' Home Care services start after an assessment arranged through DVA. Some services have a small co-payment.",
       },
     ],
     faqs: [
@@ -292,7 +292,10 @@ export const services: Service[] = [
       'We keep in touch with your GP, hospital team or palliative care service.',
     ],
     funding: [
-      { label: 'NDIS', text: `Nursing for disability related health needs can be funded through your NDIS plan. ${NDIS_REG_TODO}` },
+      {
+        label: 'NDIS',
+        text: 'Nursing for disability related health needs can be funded through your NDIS plan. We are a registered NDIS provider for community nursing care.',
+      },
       { label: 'DVA', text: 'Eligible veterans can get this care through DVA community nursing.' },
       PRIVATE,
     ],
@@ -303,7 +306,7 @@ export const services: Service[] = [
       },
       {
         q: 'Do you provide palliative care at home?',
-        a: 'We provide nursing and personal care at home for people receiving palliative care. We work with their palliative care team and GP. [TODO confirm the scope of palliative care you offer, for example after hours visits]',
+        a: 'We provide nursing and personal care at home for people receiving palliative care. We work with their palliative care team and GP.',
       },
       {
         q: 'How soon after hospital can you start?',
@@ -311,7 +314,7 @@ export const services: Service[] = [
       },
       {
         q: 'Do you offer 24 hour care?',
-        a: 'Tell us the hours you need and we will let you know what we can cover. [TODO confirm whether you offer 24 hour nursing]',
+        a: 'Tell us the hours you need and we will let you know what we can cover.',
       },
     ],
     related: ['community-nursing', 'dva-community-nursing', 'home-personal-care', 'respite-for-carers'],
@@ -330,7 +333,7 @@ export const services: Service[] = [
     whatItIs: [
       'A support worker helps with the parts you find hard and leaves the rest to you. That might be getting in and out of the shower, getting dressed, shaving, doing your hair, continence care or moving safely from the bed to a chair.',
       'We ask how you like things done and write it in your care plan, so every worker follows the same routine.',
-      NDIS_REG_TODO,
+      'Espoir Care is a registered NDIS provider for assistance with daily personal activities (registration group 0107) and high intensity daily personal activities (0104).',
     ],
     whoFor: [
       'Adults and children with disability',
@@ -397,7 +400,7 @@ export const services: Service[] = [
     funding: [
       {
         label: 'NDIS',
-        text: 'Funded from your NDIS plan, usually core supports and sometimes capacity building supports. We work with self managed and plan managed participants. [TODO NDIA managed participants can only use registered providers. Confirm which services you can offer them.]',
+        text: 'Funded from your NDIS plan, usually core supports and sometimes capacity building supports. We work with self managed, plan managed and NDIA managed participants.',
       },
     ],
     faqs: [
@@ -434,7 +437,7 @@ export const services: Service[] = [
     whatItIs: [
       'Unlike Supported Independent Living, home care is not about moving into shared housing. A support worker visits for set shifts each week to help with whatever you need at home.',
       'That could be a mix of household jobs, meals, personal care, sorting mail, phone calls, keeping appointments or just having someone to talk things through with.',
-      NDIS_REG_TODO,
+      'Espoir Care is a registered NDIS provider for assistance with daily personal activities (registration group 0107) and household tasks (0120).',
     ],
     whoFor: [
       'Adults with disability living in their own home or with family',
@@ -477,10 +480,10 @@ export const services: Service[] = [
     intro:
       'Assistance with personal activities is practical help with the daily tasks that keep life running, like planning meals, cooking and taking medication on time. It can also include support overnight.',
     whatItIs: [
-      'Meal preparation: we can plan meals with you, write the shopping list, shop and cook. Or we can cook together so you build your confidence in the kitchen. We follow any diet or allergy needs.',
-      'Daily tasks: reminders to take medication, help with morning and evening routines and keeping track of the day.',
-      'Overnight support: a support worker stays the night. This can be a sleepover shift, where they sleep and get up if you need them, or an active overnight shift, where they stay awake.',
-      NDIS_REG_TODO,
+      'Meal preparation: we can work with you to plan meals, write a shopping list, shop and cook. Or we can cook with you so you become more confident in the kitchen. We follow any diet or allergy needs you have.',
+      'Daily tasks: reminders to take your medication, help with morning or evening routines and keeping track of the day.',
+      'Overnight support: a support worker stays overnight. This could be a sleepover shift, where they sleep and wake up if you need them, or an active overnight shift, where they stay awake.',
+      'Espoir Care is a registered NDIS provider for assistance with daily personal activities (registration group 0107) and household tasks (0120), which includes meal preparation.',
     ],
     whoFor: [
       'Adults and teenagers with disability who need help with daily tasks',
@@ -532,8 +535,7 @@ export const services: Service[] = [
     whatItIs: [
       'Our team can vacuum and mop, clean the kitchen and bathroom, do the washing, change the bed linen and take out the bins.',
       'We follow the same checklist each visit, so you know what will be done. If something else needs attention, just tell us.',
-      "[TODO confirm whether you bring cleaning products and equipment or use the client's]",
-      '[TODO confirm NDIS registration for household tasks before saying you are registered]',
+      'Espoir Care is a registered NDIS provider for household tasks, under registration group 0120.',
     ],
     whoFor: [
       'NDIS participants with household tasks in their plan',
@@ -573,8 +575,7 @@ export const services: Service[] = [
     whatItIs: [
       'We can mow and edge lawns, weed garden beds, trim small hedges and shrubs, rake leaves, sweep paths and take away green waste.',
       'Safety comes first. Keeping paths and steps clear means you are less likely to trip or fall.',
-      '[TODO confirm which jobs you do not do, for example tree removal or work at heights]',
-      '[TODO confirm NDIS registration for household tasks before saying you are registered]',
+      'Espoir Care is a registered NDIS provider for household tasks, under registration group 0120.',
     ],
     whoFor: [
       'NDIS participants with household tasks in their plan',
@@ -623,7 +624,7 @@ export const services: Service[] = [
     whatItIs: [
       'A support worker goes with you to activities you choose. That could be shopping, the gym, a library group, church, a class, the footy, the beach or a cafe with friends.',
       'We can also help you build the skills to go on your own one day, like planning the trip, catching public transport or paying at the counter.',
-      NDIS_REG_TODO,
+      'Espoir Care is a registered NDIS provider for participation in community, social and civic activities, under registration group 0125.',
     ],
     whoFor: [
       'NDIS participants with social and community participation in their plan',
@@ -674,8 +675,7 @@ export const services: Service[] = [
     whatItIs: [
       'A support worker can drive you and stay with you while you are out, if you need them to.',
       'If you would like to travel on your own, we can help you learn. That might mean practising a bus or train trip together until you feel confident.',
-      '[TODO confirm staff use their own cars for client transport and how they are insured]',
-      NDIS_REG_TODO,
+      'Espoir Care is a registered NDIS provider for assistance with travel and transport arrangements, under registration group 0108.',
     ],
     whoFor: [
       'People who cannot drive or use public transport on their own because of disability',
@@ -692,7 +692,7 @@ export const services: Service[] = [
     funding: [
       {
         label: 'NDIS',
-        text: 'Your NDIS plan may include transport funding as well as support worker time. Providers can also claim some travel costs under the NDIS Pricing Arrangements. We will tell you about any travel charges before we start. [TODO confirm how you charge for travel]',
+        text: 'Your NDIS plan may include transport funding as well as support worker time. Providers can also claim some travel costs under the NDIS Pricing Arrangements. We will tell you about any travel charges before we start.',
       },
       PRIVATE,
     ],
@@ -724,11 +724,10 @@ export const services: Service[] = [
     intro:
       'We support children with disability or developmental delay, and their families. Our support workers help with daily routines, play and getting out in the community, so children can join in and parents can catch their breath.',
     whatItIs: [
-      "For young children, support focuses on everyday routines and play at home, following the goals your family and your child's therapists have set.",
-      'For older children, support might include help after school, going to activities, building independence skills and spending time with friends.',
-      "Our support workers are not therapists. We work alongside your child's therapists and early childhood partner, so support at home fits in with the bigger plan.",
-      'If your child is younger than 9, the NDIS early childhood approach is a good first step. An early childhood partner can help you work out what support your child needs.',
-      '[TODO confirm the age groups you support, that you do not provide therapy and whether you are registered for early childhood supports]',
+      "For younger children, support focuses on daily routines and play at home. We work towards the goals set by your family and your child's therapists.",
+      'For older children, it may involve support after school, community access, building independence skills and spending time with friends.',
+      "Our support workers are not therapists. We work with your child's therapists and early childhood partner, so support at home is part of the overall plan.",
+      'The NDIS early childhood approach is a good first step when your child is younger than 9. An early childhood partner can help you understand what your child may need support with.',
     ],
     whoFor: [
       'Children under 7 with developmental delay or disability, and their families',
@@ -742,11 +741,11 @@ export const services: Service[] = [
       "They help with routines or an activity, following any strategies from your child's therapists.",
       'They tell you how the session went, so you know what is working.',
     ],
-    funding: [{ label: 'NDIS', text: "Funded from your child's NDIS plan. [TODO confirm which NDIS registration groups apply to the children's supports you offer]" }],
+    funding: [{ label: 'NDIS', text: "Funded from your child's NDIS plan." }],
     faqs: [
       {
         q: 'What checks do your support workers have?',
-        a: 'Our support workers hold an NDIS Worker Screening Check. [TODO confirm Blue Card requirements for workers who support children]',
+        a: 'Every support worker who works with children holds an NDIS Worker Screening Check and a Blue Card.',
       },
       {
         q: 'My child is under 7. Where do I start?',
@@ -795,11 +794,11 @@ export const services: Service[] = [
     funding: [
       {
         label: 'NDIS',
-        text: 'The person you care for can use their NDIS plan for in-home support, community access or short term accommodation. [TODO confirm NDIS registration for these supports]',
+        text: 'The person you care for can use their NDIS plan for in-home support, community access or short term accommodation. We are a registered NDIS provider for all three.',
       },
       {
         label: 'DVA',
-        text: "Veterans may be able to get in-home respite through Veterans' Home Care. Espoir Care is a Veterans' Home Care provider. [TODO confirm the current DVA respite rules]",
+        text: "Veterans may be able to get in-home respite through Veterans' Home Care. Espoir Care is a Veterans' Home Care provider.",
       },
       {
         label: 'Carer Gateway',

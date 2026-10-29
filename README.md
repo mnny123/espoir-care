@@ -73,54 +73,23 @@ Almost everything lives in **`src/config/site.ts`**. Each `[TODO ...]` shows on 
 | `dvaProviderNumber` | `[TODO DVA PROVIDER NUMBER]`, shown on the About page |
 | `hours` | Done (open 24 hours, 7 days) |
 | `openingHoursSchema` | Done (24/7) |
-| `googleProfileUrl` | `[TODO GOOGLE PROFILE URL]`. Once set, the note under the reviews becomes a link. |
+| `googleProfileUrl` | Done. Links the note under the reviews to the Being Human Care Google profile. |
 | `customDomain`, `customDomainLive`, `noindex` | See [Moving to the custom domain later](#moving-to-the-custom-domain-later) |
 | `SHOW_STORIES` | Set to `true` once the first real story is in `src/data/stories.ts` |
 
 ### Content to confirm
 
-**Services (`src/data/services.ts`)**
-- NDIS registration for every service except SIL (you are registered for SIL under group 0115). Until you confirm, no other service claims registration.
-- Important: NDIA (agency) managed participants can only use registered providers. Check which services you can offer them. The enquiry forms still let people choose "NDIS agency managed" so they can ask.
-- Private rates, or how quotes work, for each service
-- SIL: where your homes are, how many people live in each, vacancies
-- STA: where stays happen, what the home is like, private stays
-- Community nursing: the nursing tasks your team does
-- In-home nursing: palliative care scope (for example after hours), whether you offer 24 hour nursing
-- Cleaning: whether you bring products and equipment
-- Gardening: jobs you do not do
-- Travel: staff cars, insurance, how travel is charged
-- Children: age groups, that you do not provide therapy, Blue Card requirements, early childhood registration
-- DVA: Veterans' Home Care co-payment rules and DVA respite rules
-
-**Locations (`src/data/locations.ts`)**
-- Suburb lists for all four areas (these are best guesses)
-- Bay Islands and North Stradbroke Island coverage
-- Your northern boundary (Moreton Bay) and whether you cover parts of Logan
-- How you schedule visits and any travel charges for each area
-- The "services people often ask about" list for each area
-- South side: whether extra or short notice visits really are easier there
-
-**About (`src/pages/about.astro`)**
-- How and why the business started, and the reason for the name change, in your own words
-- Team names, roles and photos (the owner is not named yet, as you asked)
-- Any other NDIS registration groups, and which Veterans' Home Care services you deliver
-
-**Careers (`src/pages/careers.astro`)**
-- Pay rates, award, employment type, training and perks
-- Whether experience or a Certificate III or IV is needed
-- Any other checks (for example a Blue Card)
+**Services, About and Careers** are filled in. Each service page names its NDIS registration group, taken from the NDIS Provider Register. Private rates follow the NDIS Pricing Arrangements.
 
 **Legal pages** (all marked "Draft, please have this reviewed")
 - "Last updated" date on every legal page (`src/layouts/Legal.astro`)
 - Privacy policy: client record system, email provider, security measures, retention periods, privacy officer, Web3Forms data handling
 - Refund and cancellation policy: NDIS short notice period and percentage (from the current NDIS Pricing Arrangements), STA rules, DVA contract terms, private notice period, fee and refund timeframe, how to cancel out of hours, notice to end services
-- Complaints: acknowledgement and resolution timeframes, checked against your complaints procedure
 - Accessibility statement: results of manual screen reader testing
 
 ### Photos and logos
 
-- **Team photos:** every lavender block saying "Team photo coming soon" or "Photo coming soon" has a TODO comment beside it (home page and About page). Swap in an `<img>` with a description in `alt`.
+- **Photos:** the home, About and domestic cleaning pages use photos from `src/assets/photos/`, shown in a cloud frame by `src/components/CloudPhoto.astro`. To swap one, replace the file (keep it roughly 4:3) or pass a different image to `<CloudPhoto>`. The originals you supplied are in `src/assets/photos/originals/` and are not published.
 - **NDIS registered provider logo:** a commented-out slot is in `src/components/Footer.astro`. Only add it once you have confirmed you are allowed to use it.
 - **Office address:** none is shown, at your request. If you open an office for visitors, add it on the Contact page (a TODO comment marks the spot) and in `src/lib/schema.ts`.
 
@@ -207,7 +176,7 @@ There are no other scripts, pixels, maps or embeds. Fonts (Figtree, through Font
 
 ## Redirects from the old site
 
-Every URL from the old site's sitemap is listed in **`src/data/redirects.json`**, with its new URL. Paths that still exist (all the service and location pages, About, Contact, Privacy policy, Thank you, Stories) were kept as they were.
+Every URL from the old site's sitemap is listed in **`src/data/redirects.json`**, with its new URL. Paths that still exist (all the service pages, About, Contact, Privacy policy, Thank you, Stories) were kept as they were. The four old location pages were removed and now forward to the Services page.
 
 GitHub Pages cannot send real 301 redirects. Until the domain moves, each changed URL gets a small page that forwards visitors and points search engines at the new page. When the domain moves to a host that supports redirects, generate the rules with:
 
@@ -242,7 +211,6 @@ If the domain changes from beinghumancare.com.au to a new one, also redirect eve
 ```
 src/config/site.ts        Business details, placeholders and switches
 src/data/services.ts      All 15 service pages (text, FAQs, funding)
-src/data/locations.ts     The 4 location pages
 src/data/reviews.ts       The two real reviews, word for word
 src/data/stories.ts       Client stories (empty until real ones are added)
 src/data/redirects.json   Old URL to new URL list

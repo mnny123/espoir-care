@@ -8,7 +8,6 @@ import TextArea from '../components/forms/TextArea.astro';
 import Choices from '../components/forms/Choices.astro';
 import PrivacyConsent from '../components/forms/PrivacyConsent.astro';
 import { BUSINESS } from '../config/site';
-import { rich } from '../lib/text';
 
 const roles = [
   { title: 'Support workers', text: 'Help people with personal care, daily tasks and getting out in the community.', icon: 'heart-handshake' },
@@ -38,8 +37,8 @@ const form = 'careers-form';
         You will work one to one with clients in their homes and out in the community, across Brisbane and the Redlands. We try to keep the same workers
         with the same clients, so you get to know the people you support.
       </p>
-      <p set:html={rich('[TODO pay rates, award and employment type (casual, part time or full time)]')} />
-      <p set:html={rich('[TODO training, supervision and any perks you offer]')} />
+      <p>We pay in line with Fair Work guidelines and the award that covers your role.</p>
+      <p>You start with training on your induction day, then join monthly team meetings and ongoing training, so you keep learning and always have support.</p>
     </div>
   </section>
 
@@ -75,17 +74,17 @@ const form = 'careers-form';
           <li><Icon name="check" size={22} /><span>Clear, friendly communication with clients and families</span></li>
           <li><Icon name="check" size={22} /><span>Willingness to learn and ask for help</span></li>
         </ul>
-        <p set:html={rich('[TODO say whether experience or a Certificate III or IV is needed for support worker roles]')} />
+        <p>Support workers need at least a Certificate III, or lived experience, in line with NDIS guidelines.</p>
       </div>
       <div>
         <h2>Checks you will need</h2>
         <ul class="check-list">
           <li><Icon name="shield" size={22} /><span>NDIS Worker Screening Check</span></li>
+          <li><Icon name="shield" size={22} /><span>Blue Card (working with children check)</span></li>
           <li><Icon name="shield" size={22} /><span>Current first aid and CPR certificates</span></li>
           <li><Icon name="shield" size={22} /><span>A driver's licence and a reliable car, for some roles</span></li>
           <li><Icon name="shield" size={22} /><span>AHPRA registration, for enrolled and registered nurses</span></li>
         </ul>
-        <p set:html={rich('[TODO add any other checks, for example a Blue Card for work with children]')} />
       </div>
     </div>
   </section>

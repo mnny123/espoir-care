@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
 import { BUSINESS } from '../config/site';
@@ -17,17 +16,22 @@ const values = [
   { title: 'We work with your people', text: 'With your permission, we keep your family, coordinator and doctors in the loop, so nobody is left guessing.' },
 ];
 
-// TODO: replace each placeholder with a real name, role and photo.
-const team = [
-  { name: '[TODO name]', role: '[TODO role, for example Director]' },
-  { name: '[TODO name]', role: '[TODO role, for example Registered nurse]' },
-  { name: '[TODO name]', role: '[TODO role, for example Support worker team leader]' },
+// From the NDIS Provider Register.
+const ndisGroups = [
+  '0138 Supported independent living',
+  '0115 Daily tasks and shared living, including short term accommodation',
+  '0107 Assistance with daily personal activities',
+  '0104 High intensity daily personal activities',
+  '0114 Community nursing care',
+  '0120 Household tasks, including cleaning, gardening and meal preparation',
+  '0125 Participation in community, social and civic activities',
+  '0108 Assistance with travel and transport arrangements',
 ];
 ---
 
 <Base
   title="About us, formerly Being Human Care | Espoir Care"
-  description="Espoir Care, formerly Being Human Care, is a local disability support and nursing provider based in the Redlands. Meet the team and our values."
+  description="Espoir Care, formerly Being Human Care, is a local disability support and nursing provider based in the Redlands. Read our story and our values."
   crumbs={[{ label: 'About', href: '/about/' }]}
 >
   <PageHeader
@@ -40,14 +44,21 @@ const team = [
       <div class="prose">
         <h2 id="who-heading">Who we are</h2>
         <p>
-          Espoir Care supports people with disability, veterans and families across Brisbane and the Redlands. Our support workers and nurses help with
-          daily life, health care and getting out and about, in people's own homes and in the community.
+          Espoir Care supports people with disability, veterans and families in Brisbane and the Redlands. Our support workers and nurses help with day to
+          day living, health care and community access, at home or out in the community.
         </p>
         <p>
-          We are a registered NDIS provider and a DVA contracted community nursing provider. We also provide services through Veterans' Home Care and to
-          people who pay privately.
+          We are an NDIS registered provider and a community nursing provider contracted to DVA. We also provide Veterans' Home Care services and support
+          clients who pay privately.
         </p>
-        <p set:html={rich('[TODO add a few sentences about how and why the business started, in your own words]')} />
+        <p>
+          Espoir Care was founded by a registered nurse with 23 years of experience in hospitals and aged care facilities. Caring for people day to day in
+          those places created a strong desire to support people and give them proper care.
+        </p>
+        <p>
+          Espoir Care brings that nursing experience into the home. Our nurses and support workers provide the same hands-on, attentive care, so people can
+          stay in the home they know and families can feel reassured about their loved ones.
+        </p>
       </div>
       <!-- TODO: stock photo for now. Replace with a real team photo when you have one. -->
       <CloudPhoto src={photoAlbum} alt="An older woman laughing with a carer as they look through a photo album together" />
@@ -59,17 +70,16 @@ const team = [
       <div class="prose">
         <h2 id="name-heading">Our new name</h2>
         <p>
-          We have changed our name from Being Human Care to Espoir Care. The business behind the name is the same, {BUSINESS.legalName}, and our phone
+          We have rebranded and changed our name from Being Human Care to Espoir Care. We are still the same business, {BUSINESS.legalName}, and our phone
           number and email address have not changed.
         </p>
         <h3>Why "espoir"?</h3>
         <p>
-          Espoir is the French word for hope. When someone first calls us, they are often worried about a loved one or unsure where to turn. We want
-          every visit to leave people feeling a bit more hopeful: that things can get easier, that they are not doing it alone and that life at home can
-          keep going.
+          Espoir is the French word for hope. When people first call us, they are often worried about a loved one or not sure what to do. Our goal is for
+          people to feel a bit more hopeful after every visit. Hopeful that things can get easier, hopeful that they are not alone and hopeful that life at
+          home can carry on.
         </p>
-        <p>Our logo is a heart made of two people, side by side. That is how we see support: two people working it out together.</p>
-        <p set:html={rich('[TODO add your reason for the name change in your own words, if you would like to share it]')} />
+        <p>Our logo is a heart made of two people side by side. This is how we see support: two people working on it together.</p>
       </div>
     </div>
   </section>
@@ -96,26 +106,6 @@ const team = [
     </div>
   </section>
 
-  <section class="section section--lilac" aria-labelledby="team-heading">
-    <div class="container">
-      <div class="section-intro">
-        <h2 id="team-heading">Our team</h2>
-        <p>Our support workers, nurses, cleaners and gardeners all live and work around Brisbane and the Redlands.</p>
-      </div>
-      <div class="grid grid--3">
-        {
-          team.map((t) => (
-            <div class="card team-card">
-              <PhotoPlaceholder label="Photo coming soon" />
-              <h3 set:html={rich(t.name)} />
-              <p set:html={rich(t.role)} />
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
   <section class="section" aria-labelledby="reg-heading">
     <div class="container">
       <div class="section-intro">
@@ -125,9 +115,11 @@ const team = [
         <div class="card">
           <span class="icon-badge"><Icon name="shield" size={26} /></span>
           <h3>Registered NDIS provider</h3>
-          <p>Registered for Supported Independent Living, under registration group 0115 (daily tasks and shared living).</p>
           <p>Registration number: <Fragment set:html={rich(BUSINESS.ndisRegNumber)} /></p>
-          <p set:html={rich('[TODO list any other NDIS registration groups once confirmed]')} />
+          <p>We are registered for:</p>
+          <ul class="reg-groups">
+            {ndisGroups.map((g) => <li>{g}</li>)}
+          </ul>
         </div>
         <div class="card">
           <span class="icon-badge"><Icon name="medal" size={26} /></span>
@@ -139,7 +131,6 @@ const team = [
           <span class="icon-badge"><Icon name="house" size={26} /></span>
           <h3>Veterans' Home Care</h3>
           <p>Veterans' Home Care provider for domestic help, personal care, respite and safety related home and garden work.</p>
-          <p set:html={rich('[TODO confirm which Veterans\' Home Care services you are approved to deliver]')} />
         </div>
       </div>
       <p class="legal-line">
@@ -156,8 +147,12 @@ const team = [
 </Base>
 
 <style>
-  .team-card :global(.photo-placeholder) {
-    margin-bottom: var(--space-4);
+  .reg-groups {
+    padding-left: 1.25em;
+    font-size: var(--text-small);
+  }
+  .reg-groups li {
+    margin-bottom: var(--space-1);
   }
   .legal-line {
     margin-top: var(--space-6);

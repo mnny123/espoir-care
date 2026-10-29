@@ -4,7 +4,6 @@ import PageHeader from '../../components/PageHeader.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { serviceBySlug, servicePath } from '../../data/services';
-import { locations } from '../../data/locations';
 import { url } from '../../lib/url';
 
 const groups = [
@@ -78,17 +77,8 @@ const groups = [
     <div class="container">
       <div class="section-intro">
         <h2 id="areas-heading">Areas we cover</h2>
-        <p>We are based in the Redlands and visit homes across Brisbane.</p>
+        <p>We are based in the Redlands and visit homes across Brisbane north, south and west, including Capalaba and Redland Bay.</p>
       </div>
-      <ul class="link-list">
-        {
-          locations.map((l) => (
-            <li>
-              <a href={url(servicePath(l.slug))}>{l.name}</a>
-            </li>
-          ))
-        }
-      </ul>
     </div>
   </section>
 

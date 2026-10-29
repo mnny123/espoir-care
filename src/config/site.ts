@@ -65,7 +65,7 @@ export const BUSINESS = {
   responsePromise: 'We reply to every enquiry within 1 to 2 business days.',
   serviceArea: 'Brisbane north, south and west and the Redlands (including Capalaba and Redland Bay), plus nearby areas',
   areaServed: ['Brisbane', 'Redland City', 'Capalaba', 'Redland Bay', 'Brisbane North', 'Brisbane South', 'Brisbane West'],
-  googleProfileUrl: '[TODO GOOGLE PROFILE URL]',
+  googleProfileUrl: 'https://www.google.com/maps?cid=9482358750631293062',
   social: [
     { label: 'Facebook', href: 'https://www.facebook.com/Being-Human-Care-106889867846710' },
     { label: 'Instagram', href: 'https://www.instagram.com/beinghumancareservices/' },

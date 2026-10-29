@@ -10,8 +10,6 @@ import TextArea from '../components/forms/TextArea.astro';
 import PrivacyConsent from '../components/forms/PrivacyConsent.astro';
 import ReferralForm from '../components/forms/ReferralForm.astro';
 import { BUSINESS } from '../config/site';
-import { locations } from '../data/locations';
-import { servicePath } from '../data/services';
 import { rich } from '../lib/text';
 import { url } from '../lib/url';
 
@@ -65,15 +63,7 @@ const general = 'general-form';
         </div>
         <div class="card">
           <h2 class="small-heading">Areas we cover</h2>
-          <ul class="area-links">
-            {
-              locations.map((l) => (
-                <li>
-                  <a href={url(servicePath(l.slug))}>{l.name}</a>
-                </li>
-              ))
-            }
-          </ul>
+          <p>We visit homes across Brisbane north, south and west and the Redlands, including Capalaba and Redland Bay.</p>
         </div>
       </aside>
       <div>
@@ -140,14 +130,5 @@ const general = 'general-form';
   }
   .emergency {
     border-left: 6px solid var(--apricot);
-  }
-  .area-links {
-    padding-left: 1.1em;
-    margin: 0;
-  }
-  .area-links a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
   }
 </style>
