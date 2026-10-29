@@ -1,0 +1,97 @@
+---
+// Lucide icons rendered as inline SVG. Decorative by default (aria-hidden).
+import {
+  House,
+  BedDouble,
+  Stethoscope,
+  Medal,
+  HeartPulse,
+  HandHeart,
+  HeartHandshake,
+  Armchair,
+  CookingPot,
+  SprayCan,
+  Sprout,
+  UsersRound,
+  Car,
+  Blocks,
+  Coffee,
+  Phone,
+  Mail,
+  Clock,
+  MapPin,
+  ChevronDown,
+  ChevronRight,
+  CircleCheck,
+  MessageCircle,
+  CalendarCheck,
+  Menu,
+  ArrowRight,
+  ShieldCheck,
+  Info,
+  CircleAlert,
+  UserRound,
+  Baby,
+  Quote,
+  Camera,
+  Briefcase,
+  ExternalLink,
+  Hospital,
+  Compass,
+  Route,
+} from '@lucide/astro';
+
+const icons = {
+  house: House,
+  bed: BedDouble,
+  stethoscope: Stethoscope,
+  medal: Medal,
+  'heart-pulse': HeartPulse,
+  'hand-heart': HandHeart,
+  'heart-handshake': HeartHandshake,
+  armchair: Armchair,
+  'cooking-pot': CookingPot,
+  'spray-can': SprayCan,
+  sprout: Sprout,
+  users: UsersRound,
+  car: Car,
+  blocks: Blocks,
+  coffee: Coffee,
+  phone: Phone,
+  mail: Mail,
+  clock: Clock,
+  'map-pin': MapPin,
+  'chevron-down': ChevronDown,
+  'chevron-right': ChevronRight,
+  check: CircleCheck,
+  message: MessageCircle,
+  calendar: CalendarCheck,
+  menu: Menu,
+  'arrow-right': ArrowRight,
+  shield: ShieldCheck,
+  info: Info,
+  alert: CircleAlert,
+  user: UserRound,
+  baby: Baby,
+  quote: Quote,
+  camera: Camera,
+  briefcase: Briefcase,
+  external: ExternalLink,
+  hospital: Hospital,
+  compass: Compass,
+  route: Route,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 24, class: className } = Astro.props;
+const Component = icons[name];
+---
+
+<Component size={size} class={className} aria-hidden="true" focusable="false" stroke-width={1.75} />

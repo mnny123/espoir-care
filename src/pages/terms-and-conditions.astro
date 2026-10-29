@@ -1,0 +1,76 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { BUSINESS } from '../config/site';
+import { url } from '../lib/url';
+---
+
+<Legal
+  title="Terms and conditions"
+  metaTitle="Website terms and conditions | Espoir Care"
+  description="The terms for using the Espoir Care website, including how to use our forms, our content and links to other websites."
+  path="/terms-and-conditions/"
+  lead="The rules for using this website."
+>
+  <h2>About these terms</h2>
+  <p>
+    This website is run by {BUSINESS.legalName}, trading as Espoir Care (formerly Being Human Care). By using the site, you agree to these terms. If you do
+    not agree, please do not use the site.
+  </p>
+  <p>
+    These terms cover the website only. Your support or nursing services are covered by a separate service agreement that we make with you.
+  </p>
+
+  <h2>Information on this website</h2>
+  <p>
+    The information on this site is general. It is not medical, legal or financial advice. It does not replace advice from your doctor, the NDIA, DVA
+    or another professional who knows your situation.
+  </p>
+  <p>
+    We try to keep the site accurate and up to date, but funding rules and our services can change. Please check with us before making decisions based on
+    what you read here.
+  </p>
+
+  <h2>Not an emergency service</h2>
+  <p>This website and our forms are not monitored around the clock. In an emergency, call 000.</p>
+
+  <h2>Using our forms</h2>
+  <p>When you send a form, please:</p>
+  <ul>
+    <li>give accurate details</li>
+    <li>only share someone else's information if you have their permission</li>
+    <li>not send anything unlawful, offensive or harmful</li>
+  </ul>
+  <p>Our <a href={url('/privacy-policy/')}>privacy policy</a> explains how we handle the information you send.</p>
+
+  <h2>Our content</h2>
+  <p>
+    The text, logo and design of this website belong to us. You may view, print or share pages for personal, non-commercial use. Please do not copy our
+    content or logo for any other purpose without our written permission.
+  </p>
+
+  <h2>Links to other websites</h2>
+  <p>
+    We link to other websites, such as government sites, that we think may help you. We are not responsible for their content or how they handle your
+    information.
+  </p>
+
+  <h2>Our responsibility</h2>
+  <p>
+    Nothing in these terms excludes, restricts or changes any right or remedy you have under the Australian Consumer Law or any other law that cannot be
+    excluded. Apart from those rights, and to the extent the law allows, we are not liable for any loss that comes from using this website or relying on
+    its general information.
+  </p>
+
+  <h2>Changes to these terms</h2>
+  <p>We may update these terms from time to time. The version on this page is the one that applies.</p>
+
+  <h2>Law that applies</h2>
+  <p>These terms are governed by the laws of Queensland, Australia.</p>
+
+  <h2>Contact us</h2>
+  <p>
+    Phone: <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a><br />
+    Email: <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a><br />
+    ABN: {BUSINESS.abn}
+  </p>
+</Legal>

@@ -1,0 +1,72 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { BUSINESS } from '../config/site';
+import { url } from '../lib/url';
+---
+
+<Legal
+  title="Complaints and feedback"
+  metaTitle="Complaints and feedback | Espoir Care"
+  description="How to give feedback or make a complaint to Espoir Care, and how to contact the NDIS Quality and Safeguards Commission, DVA or the Health Ombudsman."
+  path="/complaints-and-feedback/"
+  lead="We want to hear what we are doing well and what we could do better."
+>
+  <h2>Your feedback matters</h2>
+  <p>
+    Compliments, ideas and complaints all help us improve. Making a complaint will never affect the support you receive from us. You can stay anonymous
+    if you prefer, although that can make it harder for us to look into things.
+  </p>
+
+  <h2>How to tell us</h2>
+  <ul>
+    <li>Talk to your support worker or nurse</li>
+    <li>Call us on <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></li>
+    <li>Email <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></li>
+    <li>Send a message through our <a href={url('/contact/')}>contact page</a></li>
+  </ul>
+  <p>
+    A family member, friend or advocate can make a complaint for you or help you with it. To find a free disability advocate, visit the
+    <a href="https://disabilityadvocacyfinder.dss.gov.au/" rel="noopener">Disability Advocacy Finder</a>.
+  </p>
+
+  <h2>What happens next</h2>
+  <ol>
+    <li>We let you know we have received your complaint within [TODO timeframe].</li>
+    <li>We talk with you to understand what happened and what you would like to happen.</li>
+    <li>We look into it fairly and keep you updated.</li>
+    <li>We tell you what we found and what we will do, usually within [TODO timeframe].</li>
+    <li>We use what we learn to improve how we work.</li>
+  </ol>
+  <p>[TODO check these steps and timeframes match your complaints management procedure]</p>
+
+  <h2>If you are not happy with how we handled it</h2>
+  <h3>NDIS participants</h3>
+  <p>You can contact the NDIS Quality and Safeguards Commission at any time. You do not have to come to us first.</p>
+  <ul>
+    <li>Phone: 1800 035 544 (free call from landlines)</li>
+    <li>Website: <a href="https://www.ndiscommission.gov.au/" rel="noopener">ndiscommission.gov.au</a></li>
+  </ul>
+
+  <h3>DVA clients</h3>
+  <p>You can give feedback to the Department of Veterans' Affairs.</p>
+  <ul>
+    <li>Phone: 1800 VETERAN (1800 838 372)</li>
+    <li>Website: <a href="https://www.dva.gov.au/" rel="noopener">dva.gov.au</a></li>
+  </ul>
+
+  <h3>Complaints about nursing or health care</h3>
+  <p>You can contact the Office of the Health Ombudsman in Queensland.</p>
+  <ul>
+    <li>Phone: 133 OHO (133 646)</li>
+    <li>Website: <a href="https://www.oho.qld.gov.au/" rel="noopener">oho.qld.gov.au</a></li>
+  </ul>
+
+  <h3>Privacy complaints</h3>
+  <p>See the complaints section of our <a href={url('/privacy-policy/')}>privacy policy</a>.</p>
+
+  <h2>If someone is in danger</h2>
+  <p>
+    If someone is in immediate danger, call 000. If you are worried about abuse or neglect of a person with disability, you can also report it to the NDIS
+    Quality and Safeguards Commission on 1800 035 544.
+  </p>
+</Legal>

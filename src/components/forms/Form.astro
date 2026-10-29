@@ -1,0 +1,49 @@
+---
+import { WEB3FORMS_ACCESS_KEY } from '../../config/site';
+import { absoluteUrl, url } from '../../lib/url';
+import ResponsePromise from '../ResponsePromise.astro';
+
+interface Props {
+  id: string;
+  subject: string;
+  submitLabel: 'Send enquiry' | 'Send referral' | 'Send application' | 'Send message';
+  formType: string;
+}
+const { id, subject, submitLabel, formType } = Astro.props;
+---
+
+<!--
+  Posts to Web3Forms. The receiving email address is set against the access
+  key in the Web3Forms dashboard. On success Web3Forms sends the person to
+  the thank you page.
+-->
+<form class="form" id={id} action="https://api.web3forms.com/submit" method="POST" data-validate>
+  <div class="error-summary" id={`${id}-errors`} tabindex="-1" hidden aria-labelledby={`${id}-errors-heading`}>
+    <p class="error-summary-title" id={`${id}-errors-heading`}>Please check the form</p>
+    <p>Some details need fixing before we can send this:</p>
+    <ul></ul>
+  </div>
+
+  <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value="Espoir Care website" />
+  <input type="hidden" name="Form" value={formType} />
+  <input type="hidden" name="redirect" value={absoluteUrl('/thank-you/')} />
+  <!-- Honeypot for spam bots. People never see or reach this field. -->
+  <div class="honeypot" aria-hidden="true">
+    <label>Leave this box empty <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <slot />
+
+  <p class="form-privacy">
+    We'll only use these details to reply to you. See our <a href={url('/privacy-policy/')}>privacy policy</a>.
+  </p>
+  <button type="submit" class="btn btn--primary">{submitLabel}</button>
+  <div class="form-promise"><ResponsePromise /></div>
+</form>
+
+<script>
+  import { initForms } from './forms';
+  initForms();
+</script>

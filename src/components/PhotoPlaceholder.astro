@@ -1,0 +1,16 @@
+---
+// TODO: replace with a real photo. Use an <img> with descriptive alt text,
+// or alt="" if the photo is purely decorative.
+import Icon from './Icon.astro';
+
+interface Props {
+  label: string;
+  wide?: boolean;
+}
+const { label, wide = false } = Astro.props;
+---
+
+<div class:list={['photo-placeholder', { 'photo-placeholder--wide': wide }]}>
+  <Icon name="camera" size={20} />
+  <span>{label}</span>
+</div>

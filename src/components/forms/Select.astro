@@ -1,0 +1,40 @@
+---
+import { fieldId } from './ids';
+
+interface Props {
+  form: string;
+  name: string;
+  label: string;
+  options: string[];
+  required?: boolean;
+  optional?: boolean;
+  hint?: string;
+  requiredMessage?: string;
+  // Shows fields marked data-reveal-when="<value>" in the same form only when this value is chosen.
+  controlsReveal?: boolean;
+}
+const { form, name, label, options, required = false, optional = false, hint, requiredMessage, controlsReveal = false } = Astro.props;
+const id = fieldId(form, name);
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = `${id}-error`;
+---
+
+<div class="field field--medium" data-field data-required-msg={requiredMessage ?? `Choose ${label.toLowerCase()}`}>
+  <label for={id}>
+    {label}
+    {required && <span class="req">(required)</span>}
+    {optional && <span class="opt">(optional)</span>}
+  </label>
+  {hint && <p class="hint" id={hintId}>{hint}</p>}
+  <p class="field-error" id={errorId} hidden></p>
+  <select
+    id={id}
+    name={name}
+    required={required}
+    data-reveal-control={controlsReveal ? '' : undefined}
+    aria-describedby={[hintId, errorId].filter(Boolean).join(' ')}
+  >
+    <option value="">Please choose</option>
+    {options.map((o) => <option value={o}>{o}</option>)}
+  </select>
+</div>

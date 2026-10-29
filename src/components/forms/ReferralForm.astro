@@ -1,0 +1,101 @@
+---
+// Referral form for coordinators, health professionals, families or self
+// referral. Collects only what is listed in the brief. No file uploads.
+import Form from './Form.astro';
+import Field from './Field.astro';
+import TextArea from './TextArea.astro';
+import Select from './Select.astro';
+import Choices from './Choices.astro';
+import Consent from './Consent.astro';
+import PrivacyConsent from './PrivacyConsent.astro';
+import { services } from '../../data/services';
+
+const form = 'referral-form';
+const fundingOptions = ['NDIS self managed', 'NDIS plan managed', 'NDIS agency managed (NDIA)', 'DVA', 'Private', 'Not sure'];
+---
+
+<Form id={form} subject="Website referral" submitLabel="Send referral" formType="Referral">
+  <div class="form-section">
+    <h4 class="form-section-title">Your details</h4>
+    <Field form={form} name="Referrer name" label="Your name" required autocomplete="name" requiredMessage="Enter your name" />
+    <Field form={form} name="Referrer organisation" label="Organisation" optional autocomplete="organization" />
+    <Field
+      form={form}
+      name="Referrer role or relationship"
+      label="Your role, or your relationship to the participant"
+      hint="For example support coordinator, discharge planner, parent or self referral"
+      required
+      requiredMessage="Enter your role or your relationship to the participant"
+    />
+    <Field form={form} name="Referrer phone" label="Your phone" type="tel" required autocomplete="tel" inputmode="tel" requiredMessage="Enter a phone number we can call you on" width="medium" />
+    <Field form={form} name="email" label="Your email" type="email" required autocomplete="email" requiredMessage="Enter your email address" />
+  </div>
+
+  <div class="form-section">
+    <h4 class="form-section-title">Participant details</h4>
+    <Field form={form} name="Participant first name" label="Participant's first name" required requiredMessage="Enter the participant's first name" />
+    <Field form={form} name="Participant last name" label="Participant's last name" required requiredMessage="Enter the participant's last name" />
+    <Field
+      form={form}
+      name="Participant phone or best contact"
+      label="Participant's phone, or the best way to contact them"
+      required
+      requiredMessage="Enter a phone number or the best way to contact the participant"
+    />
+    <Field form={form} name="Participant suburb" label="Participant's suburb" required requiredMessage="Enter the participant's suburb" width="medium" />
+    <Field form={form} name="Participant date of birth" label="Participant's date of birth" type="date" required requiredMessage="Enter the participant's date of birth" width="medium" />
+    <Field form={form} name="Participant main language" label="Main language spoken" optional width="medium" />
+    <Choices form={form} legend="Is an interpreter needed?" type="radio" name="Interpreter needed" options={['Yes', 'No']} optional inline />
+    <Select
+      form={form}
+      name="Funding type"
+      label="Funding type"
+      options={fundingOptions}
+      required
+      requiredMessage="Choose the funding type, or choose Not sure"
+      controlsReveal
+    />
+    <Field form={form} name="NDIS number" label="NDIS number" optional inputmode="numeric" width="medium" />
+    <Field
+      form={form}
+      name="DVA file number"
+      label="DVA file number"
+      optional
+      hint="Only needed if the funding type is DVA."
+      revealWhen="DVA"
+      width="medium"
+    />
+  </div>
+
+  <div class="form-section">
+    <h4 class="form-section-title">Support needed</h4>
+    <Choices form={form} legend="Services requested" type="checkbox" name="Service requested" options={[...services.map((s) => s.name), 'Not sure yet']} optional columns />
+    <Field form={form} name="Preferred start date" label="Preferred start date" type="date" optional width="medium" />
+    <TextArea
+      form={form}
+      name="Support needs"
+      label="Briefly describe the support needed"
+      hint="A few sentences is enough. Please do not include detailed medical history. We will ask for what we need later, with consent."
+      required
+      requiredMessage="Briefly describe the support needed"
+      maxlength={1000}
+    />
+    <TextArea
+      form={form}
+      name="Risks before first visit"
+      label="Any risks our staff should know about before a first visit?"
+      hint="For example pets, access issues or safety concerns at the home."
+      optional
+      rows={3}
+      maxlength={1000}
+    />
+  </div>
+
+  <div class="form-section">
+    <h4 class="form-section-title">Consent</h4>
+    <Consent form={form} name="Participant consent" requiredMessage="Tick the box to confirm the participant, or their guardian, has agreed to this referral">
+      The participant (or their guardian) has agreed to this referral and to their details being shared with Espoir Care.
+    </Consent>
+    <PrivacyConsent form={form} />
+  </div>
+</Form>

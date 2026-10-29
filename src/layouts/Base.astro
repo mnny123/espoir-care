@@ -1,0 +1,126 @@
+---
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { DEPLOY, GA_MEASUREMENT_ID, gaEnabled } from '../config/site';
+import { absoluteUrl, url } from '../lib/url';
+import { breadcrumbList, faqPage, localBusiness, type Crumb, type Faq } from '../lib/schema';
+import { plain } from '../lib/text';
+
+interface Props {
+  title: string;
+  description: string;
+  // Breadcrumb trail after Home. Leave out on the homepage.
+  crumbs?: Crumb[];
+  faqs?: Faq[];
+  noindex?: boolean;
+  hideStickyBar?: boolean;
+  canonicalPath?: string;
+}
+
+const { title, description, crumbs, faqs, noindex = false, hideStickyBar = false, canonicalPath } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = canonicalPath ?? (Astro.url.pathname.slice(base.length) || '/');
+const canonical = absoluteUrl(path);
+const ogImage = absoluteUrl('/og-image.png');
+const robots = DEPLOY.noindex || noindex ? 'noindex, nofollow' : 'index, follow';
+
+const allCrumbs = crumbs ? [{ label: 'Home', href: '/' }, ...crumbs] : undefined;
+const schemas: object[] = [localBusiness()];
+if (allCrumbs) schemas.push(breadcrumbList(allCrumbs));
+if (faqs?.length) schemas.push(faqPage(faqs.map((f) => ({ q: f.q, a: plain(f.a) }))));
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#4A2C5E" />
+
+    <link rel="icon" href={url('/favicon.ico')} sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href={url('/favicon-32x32.png')} />
+    <link rel="icon" type="image/png" sizes="16x16" href={url('/favicon-16x16.png')} />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
+    <link rel="manifest" href={url('/site.webmanifest')} />
+    <link rel="sitemap" href={url('/sitemap-index.xml')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Espoir Care" />
+    <meta property="og:locale" content="en_AU" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Espoir Care logo: a heart made of two people" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Espoir Care logo: a heart made of two people" />
+
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+
+    <!--
+      Google Consent Mode v2. Everything is denied by default and the
+      Google Analytics script is only added after "Accept analytics".
+    -->
+    <script is:inline define:vars={{ gaId: GA_MEASUREMENT_ID, gaEnabled }}>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () {
+        window.dataLayer.push(arguments);
+      };
+      window.gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+      });
+      window.espoirAnalytics = {
+        load: function () {
+          if (!gaEnabled || window.espoirAnalytics.loaded) return;
+          window.espoirAnalytics.loaded = true;
+          window.gtag('consent', 'update', { analytics_storage: 'granted' });
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaId);
+          document.head.appendChild(s);
+          window.gtag('js', new Date());
+          window.gtag('config', gaId);
+        },
+      };
+      try {
+        if (localStorage.getItem('espoir-consent') === 'granted') window.espoirAnalytics.load();
+      } catch (e) {}
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body class={hideStickyBar ? '' : 'has-sticky-bar'}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      {allCrumbs && <Breadcrumbs crumbs={allCrumbs} />}
+      <slot />
+    </main>
+    <Footer />
+    {!hideStickyBar && <StickyBar />}
+    <CookieBanner />
+  </body>
+</html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

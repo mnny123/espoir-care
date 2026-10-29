@@ -1,0 +1,83 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { url } from '../lib/url';
+---
+
+<Legal
+  title="Cookie policy"
+  metaTitle="Cookie policy | Espoir Care"
+  description="Which cookies the Espoir Care website uses, what Google Analytics sets if you accept, and how to change your choice at any time."
+  path="/cookie-policy/"
+  lead="What we store in your browser and how to change your choice."
+>
+  <h2>What cookies are</h2>
+  <p>Cookies are small files a website saves in your browser. Some are needed for a site to work. Others help the owner understand how the site is used.</p>
+
+  <h2>What we use</h2>
+  <h3>Your cookie choice</h3>
+  <p>
+    When you choose "Accept analytics" or "Decline", we remember your choice in your browser's local storage under the name <code>espoir-consent</code>.
+    It is not a cookie and it is never sent to us. It just stops the cookie banner from showing on every page.
+  </p>
+
+  <h3>Google Analytics (only if you accept)</h3>
+  <p>
+    If you choose "Accept analytics", we load Google Analytics 4. It tells us which pages people visit, how they found the site and what kind of device
+    they use, so we can make the site easier to use. Until you accept, Google Analytics does not load at all and no analytics cookies are set.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <caption class="visually-hidden">Cookies set by Google Analytics</caption>
+      <thead>
+        <tr>
+          <th scope="col">Cookie</th>
+          <th scope="col">What it does</th>
+          <th scope="col">How long it lasts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>_ga</code></td>
+          <td>Tells one visitor apart from another</td>
+          <td>2 years</td>
+        </tr>
+        <tr>
+          <td><code>_ga_</code> followed by an ID</td>
+          <td>Keeps track of your current visit</td>
+          <td>2 years</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    We use Google Consent Mode with everything turned off by default. Even if you accept analytics, advertising features stay off. Google's own privacy
+    policy explains how Google handles this data:
+    <a href="https://policies.google.com/privacy" rel="noopener">policies.google.com/privacy</a>.
+  </p>
+
+  <h3>What we do not use</h3>
+  <p>We do not use advertising cookies, tracking pixels, social media plugins or embedded maps.</p>
+
+  <h2 id="cookie-settings">Changing your choice</h2>
+  <p>You can change your mind at any time. Use the "Cookie settings" link at the bottom of every page, or this button:</p>
+  <p class="js-only"><button type="button" class="btn btn--secondary" data-cookie-settings>Change cookie settings</button></p>
+  <noscript>
+    <p>JavaScript is turned off in your browser, so Google Analytics cannot load and no analytics cookies are set.</p>
+  </noscript>
+  <p>
+    If you decline after accepting, we remove the Google Analytics cookies we can reach. You can also clear cookies in your browser settings, or install
+    Google's <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">opt-out browser add-on</a>.
+  </p>
+
+  <h2>More information</h2>
+  <p>Our <a href={url('/privacy-policy/')}>privacy policy</a> explains how we handle personal information.</p>
+</Legal>
+
+<style>
+  .js-only {
+    display: none;
+  }
+  :global(.js) .js-only {
+    display: block;
+  }
+</style>

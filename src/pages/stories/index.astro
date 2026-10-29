@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { SHOW_STORIES } from '../../config/site';
+import { stories } from '../../data/stories';
+import { url } from '../../lib/url';
+
+const live = SHOW_STORIES && stories.length > 0;
+---
+
+<Base
+  title="Client stories | Espoir Care"
+  description="Real stories from people we support and their families, shared with their permission."
+  crumbs={[{ label: 'Stories', href: '/stories/' }]}
+  noindex={!live}
+>
+  <PageHeader title="Stories" lead="Real stories from people we support and their families, shared with their permission." />
+  <section class="section">
+    <div class="container">
+      {
+        live ? (
+          <div class="grid grid--2">
+            {stories.map((s) => (
+              <div class="card link-card">
+                <h2 class="story-title">
+                  <a href={url(`/stories/${s.slug}/`)}>{s.title}</a>
+                </h2>
+                <p>{s.situation}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="prose">
+            <h2>Stories coming soon</h2>
+            <p>We are gathering stories from the people we support. We will only share them with their permission.</p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+
+<style>
+  .story-title {
+    font-size: 1.25rem;
+  }
+</style>

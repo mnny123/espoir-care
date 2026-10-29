@@ -1,0 +1,51 @@
+---
+import Base from './Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+interface Props {
+  title: string;
+  metaTitle: string;
+  description: string;
+  path: string;
+  lead?: string;
+}
+const { title, metaTitle, description, path, lead } = Astro.props;
+---
+
+<Base title={metaTitle} description={description} crumbs={[{ label: title, href: path }]}>
+  <PageHeader title={title} lead={lead} draft />
+  <div class="section">
+    <div class="container prose legal">
+      <p class="muted">Last updated: <mark class="todo">TODO date</mark></p>
+      <slot />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .legal :global(h2) {
+    font-size: 1.5rem;
+  }
+  .legal :global(h3) {
+    font-size: 1.2rem;
+  }
+  .legal :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--space-5);
+    font-size: var(--text-small);
+  }
+  .legal :global(th),
+  .legal :global(td) {
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-3) var(--space-2);
+  }
+  .legal :global(th) {
+    color: var(--plum);
+  }
+  .legal :global(.table-wrap) {
+    overflow-x: auto;
+  }
+</style>

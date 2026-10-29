@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { url } from '../lib/url';
+
+const pages = [
+  { label: 'Home', href: '/' },
+  { label: 'Our services', href: '/services/' },
+  { label: 'Make an enquiry', href: '/enquire/' },
+  { label: 'Make a referral', href: '/contact/#referral' },
+  { label: 'About us', href: '/about/' },
+  { label: 'Careers', href: '/careers/' },
+  { label: 'Contact us', href: '/contact/' },
+];
+---
+
+<Base
+  title="Page not found | Espoir Care"
+  description="Sorry, we cannot find that page. Try one of these links or make an enquiry with Espoir Care."
+  noindex
+  canonicalPath="/404/"
+>
+  <PageHeader
+    title="Sorry, we cannot find that page"
+    lead="The page may have moved when we changed our name from Being Human Care. One of these links should help."
+  />
+  <section class="section">
+    <div class="container">
+      <h2>Popular pages</h2>
+      <ul class="link-list">
+        {
+          pages.map((p) => (
+            <li>
+              <a href={url(p.href)}>{p.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="actions"><a class="btn btn--primary" href={url('/enquire/')}>Make an enquiry</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .actions {
+    margin-top: var(--space-5);
+  }
+</style>

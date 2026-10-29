@@ -1,0 +1,69 @@
+---
+import { fieldId } from './ids';
+
+interface Props {
+  form: string;
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'date';
+  required?: boolean;
+  optional?: boolean;
+  autocomplete?: string;
+  hint?: string;
+  requiredMessage?: string;
+  inputmode?: 'text' | 'numeric' | 'tel' | 'email';
+  revealWhen?: string;
+  width?: 'short' | 'medium';
+}
+const {
+  form,
+  name,
+  label,
+  type = 'text',
+  required = false,
+  optional = false,
+  autocomplete,
+  hint,
+  requiredMessage,
+  inputmode,
+  revealWhen,
+  width,
+} = Astro.props;
+
+const id = fieldId(form, name);
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = `${id}-error`;
+const typeMessages: Record<string, string> = {
+  email: 'Enter an email address in the right format, like name@example.com',
+  tel: 'Enter a phone number using numbers only, like 0412 345 678',
+  date: 'Enter a real date',
+};
+// Phone numbers: digits, spaces, brackets, dashes and a leading plus, 8 to 20 characters.
+const pattern = type === 'tel' ? '[0-9 +\\(\\)\\-]{8,20}' : undefined;
+---
+
+<div
+  class:list={['field', width && `field--${width}`]}
+  data-field
+  data-required-msg={requiredMessage ?? `Enter ${label.charAt(0).toLowerCase()}${label.slice(1)}`}
+  data-type-msg={typeMessages[type]}
+  data-reveal-when={revealWhen}
+>
+  <label for={id}>
+    {label}
+    {required && <span class="req">(required)</span>}
+    {optional && <span class="opt">(optional)</span>}
+  </label>
+  {hint && <p class="hint" id={hintId}>{hint}</p>}
+  <p class="field-error" id={errorId} hidden></p>
+  <input
+    id={id}
+    name={name}
+    type={type}
+    required={required}
+    autocomplete={autocomplete ?? 'off'}
+    inputmode={inputmode}
+    pattern={pattern}
+    aria-describedby={[hintId, errorId].filter(Boolean).join(' ')}
+  />
+</div>

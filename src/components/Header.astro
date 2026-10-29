@@ -1,0 +1,353 @@
+---
+import { BUSINESS, SHOW_STORIES } from '../config/site';
+import { services, servicePath } from '../data/services';
+import { url } from '../lib/url';
+import Icon from './Icon.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const current = Astro.url.pathname.slice(base.length) || '/';
+
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about/' },
+  ...(SHOW_STORIES ? [{ label: 'Stories', href: '/stories/' }] : []),
+  { label: 'Careers', href: '/careers/' },
+  { label: 'Contact', href: '/contact/' },
+];
+const isCurrent = (href: string) => (current === href ? 'page' : undefined);
+const inServices = current.startsWith('/services/');
+---
+
+<div class="topbar">
+  <div class="container">
+    <p>Espoir Care, formerly Being Human Care</p>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href={url('/')}>
+      <img src={url('/brand/logo-horizontal.png')} alt="Espoir Care home" width="579" height="125" />
+    </a>
+
+    <nav class="nav-desktop" aria-label="Main">
+      <ul>
+        <li><a href={url('/')} aria-current={isCurrent('/')}>Home</a></li>
+        <li class="has-dropdown">
+          <details class="dropdown" data-dropdown>
+            <summary class:list={{ active: inServices }}>
+              Services <Icon name="chevron-down" size={18} />
+            </summary>
+            <div class="dropdown-panel">
+              <ul>
+                <li><a href={url('/services/')} aria-current={isCurrent('/services/')}><strong>All services</strong></a></li>
+                {
+                  services.map((s) => (
+                    <li>
+                      <a href={url(servicePath(s.slug))} aria-current={isCurrent(servicePath(s.slug))}>
+                        {s.name}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </details>
+        </li>
+        {
+          links.slice(1).map((l) => (
+            <li>
+              <a href={url(l.href)} aria-current={isCurrent(l.href)}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="btn btn--primary" href={url('/enquire/')}>Make an enquiry</a>
+    </nav>
+
+    <details class="nav-mobile" data-dropdown>
+      <summary class="btn btn--secondary">
+        <Icon name="menu" size={20} /> Menu
+      </summary>
+      <nav class="mobile-panel" aria-label="Main">
+        <ul class="mobile-links">
+          <li><a href={url('/')} aria-current={isCurrent('/')}>Home</a></li>
+          <li><a href={url('/services/')} aria-current={isCurrent('/services/')}>Services</a></li>
+          {
+            links.slice(1).map((l) => (
+              <li>
+                <a href={url(l.href)} aria-current={isCurrent(l.href)}>
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mobile-actions">
+          <a class="btn btn--primary" href={url('/enquire/')}>Make an enquiry</a>
+          <a class="btn btn--secondary" href={BUSINESS.phoneHref}><Icon name="phone" size={20} /> Call {BUSINESS.phone}</a>
+        </div>
+        <details class="mobile-services">
+          <summary>Our services <Icon name="chevron-down" size={18} /></summary>
+          <ul>
+            {
+              services.map((s) => (
+                <li>
+                  <a href={url(servicePath(s.slug))} aria-current={isCurrent(servicePath(s.slug))}>
+                    {s.name}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </details>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Close open menus with Escape or a click outside. Without JavaScript the
+  // menus still open and close with their own toggle.
+  const menus = Array.from(document.querySelectorAll<HTMLDetailsElement>('details[data-dropdown]'));
+  document.addEventListener('click', (event) => {
+    for (const menu of menus) {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const menu of menus) {
+      if (menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    }
+  });
+</script>
+
+<style>
+  .topbar {
+    background: var(--lilac);
+    border-bottom: 1px solid var(--border);
+    color: var(--slate);
+    font-size: var(--text-xs);
+  }
+  .topbar p {
+    margin: 0;
+    padding-block: var(--space-1);
+  }
+
+  .site-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 20;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 72px;
+    padding-block: var(--space-3);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    flex: none;
+    min-height: var(--tap);
+  }
+  .logo img {
+    height: 32px;
+    width: auto;
+  }
+  @media (min-width: 30em) {
+    .logo img {
+      height: 40px;
+    }
+  }
+  @media (min-width: 64em) {
+    .logo img {
+      height: 48px;
+    }
+  }
+
+  /* Desktop navigation */
+  .nav-desktop {
+    display: none;
+  }
+  @media (min-width: 64em) {
+    .nav-desktop {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+    }
+    .nav-mobile {
+      display: none;
+    }
+  }
+  .nav-desktop > ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-desktop > ul > li {
+    margin: 0;
+    position: relative;
+  }
+  .nav-desktop > ul > li > a,
+  .dropdown summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    color: var(--plum);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius-button);
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition);
+  }
+  .nav-desktop > ul > li > a:hover,
+  .dropdown summary:hover {
+    background: var(--lilac);
+    color: var(--purple);
+  }
+  .nav-desktop a[aria-current='page'],
+  .dropdown summary.active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+  .dropdown summary {
+    list-style: none;
+  }
+  .dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+  .dropdown summary :global(svg) {
+    transition: transform var(--transition);
+  }
+  .dropdown[open] summary :global(svg) {
+    transform: rotate(180deg);
+  }
+  .dropdown-panel {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    width: 36rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--space-4);
+    box-shadow: 0 4px 12px rgba(74, 44, 94, 0.08);
+  }
+  .dropdown-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--space-4);
+  }
+  .dropdown-panel li {
+    margin: 0;
+  }
+  .dropdown-panel li:first-child {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--space-2);
+  }
+  .dropdown-panel a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-2);
+    border-radius: 6px;
+    color: var(--plum);
+    text-decoration: none;
+    line-height: 1.3;
+  }
+  .dropdown-panel a:hover {
+    background: var(--lilac);
+    color: var(--purple);
+    text-decoration: underline;
+  }
+  .dropdown-panel a[aria-current='page'] {
+    text-decoration: underline;
+  }
+
+  /* Mobile navigation */
+  .nav-mobile > summary {
+    list-style: none;
+    min-height: var(--tap);
+    padding-inline: var(--space-4);
+  }
+  .nav-mobile > summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-4) var(--gutter) var(--space-5);
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+  }
+  .mobile-links,
+  .mobile-services ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mobile-links li,
+  .mobile-services li {
+    margin: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-links a,
+  .mobile-services a,
+  .mobile-services summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    color: var(--plum);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .mobile-services a {
+    font-weight: 400;
+    padding-left: var(--space-4);
+  }
+  .mobile-links a[aria-current='page'],
+  .mobile-services a[aria-current='page'] {
+    text-decoration: underline;
+  }
+  .mobile-services summary {
+    cursor: pointer;
+    list-style: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-services summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-services[open] summary :global(svg) {
+    transform: rotate(180deg);
+  }
+  .mobile-actions {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-5) 0;
+  }
+</style>

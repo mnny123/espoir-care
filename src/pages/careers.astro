@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import Form from '../components/forms/Form.astro';
+import Field from '../components/forms/Field.astro';
+import TextArea from '../components/forms/TextArea.astro';
+import Choices from '../components/forms/Choices.astro';
+import PrivacyConsent from '../components/forms/PrivacyConsent.astro';
+import { BUSINESS } from '../config/site';
+import { rich } from '../lib/text';
+
+const roles = [
+  { title: 'Support workers', text: 'Help people with personal care, daily tasks and getting out in the community.', icon: 'heart-handshake' },
+  { title: 'Enrolled nurses', text: 'Give nursing care at home under the direction of a registered nurse.', icon: 'stethoscope' },
+  { title: 'Registered nurses', text: 'Assess, plan and give nursing care at home, including DVA community nursing.', icon: 'heart-pulse' },
+  { title: 'Cleaners', text: "Keep clients' homes clean and safe on a regular schedule.", icon: 'spray-can' },
+  { title: 'Gardeners', text: 'Mow, weed and keep yards and paths safe and tidy.', icon: 'sprout' },
+] as const;
+
+const form = 'careers-form';
+---
+
+<Base
+  title="Careers in disability support and nursing | Espoir Care"
+  description="Work with Espoir Care as a support worker, nurse, cleaner or gardener across Brisbane and the Redlands. Send us an expression of interest."
+  crumbs={[{ label: 'Careers', href: '/careers/' }]}
+>
+  <PageHeader
+    title="Work with us"
+    lead="We would like to hear from kind, reliable people who want to help others live well at home."
+  />
+
+  <section class="section" aria-labelledby="working-heading">
+    <div class="container prose">
+      <h2 id="working-heading">Working at Espoir Care</h2>
+      <p>
+        You will work one to one with clients in their homes and out in the community, across Brisbane and the Redlands. We try to keep the same workers
+        with the same clients, so you get to know the people you support.
+      </p>
+      <p set:html={rich('[TODO pay rates, award and employment type (casual, part time or full time)]')} />
+      <p set:html={rich('[TODO training, supervision and any perks you offer]')} />
+    </div>
+  </section>
+
+  <section class="section section--lilac" aria-labelledby="roles-heading">
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="roles-heading">Roles we hire</h2>
+      </div>
+      <div class="grid grid--3">
+        {
+          roles.map((r) => (
+            <div class="card">
+              <span class="icon-badge">
+                <Icon name={r.icon} size={26} />
+              </span>
+              <h3>{r.title}</h3>
+              <p>{r.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="look-heading">
+    <div class="container grid grid--2">
+      <div>
+        <h2 id="look-heading">What we look for</h2>
+        <ul class="check-list">
+          <li><Icon name="check" size={22} /><span>Kindness and patience</span></li>
+          <li><Icon name="check" size={22} /><span>Turning up on time and doing what you said you would</span></li>
+          <li><Icon name="check" size={22} /><span>Respect for people's privacy, culture and choices</span></li>
+          <li><Icon name="check" size={22} /><span>Clear, friendly communication with clients and families</span></li>
+          <li><Icon name="check" size={22} /><span>Willingness to learn and ask for help</span></li>
+        </ul>
+        <p set:html={rich('[TODO say whether experience or a Certificate III or IV is needed for support worker roles]')} />
+      </div>
+      <div>
+        <h2>Checks you will need</h2>
+        <ul class="check-list">
+          <li><Icon name="shield" size={22} /><span>NDIS Worker Screening Check</span></li>
+          <li><Icon name="shield" size={22} /><span>Current first aid and CPR certificates</span></li>
+          <li><Icon name="shield" size={22} /><span>A driver's licence and a reliable car, for some roles</span></li>
+          <li><Icon name="shield" size={22} /><span>AHPRA registration, for enrolled and registered nurses</span></li>
+        </ul>
+        <p set:html={rich('[TODO add any other checks, for example a Blue Card for work with children]')} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--lilac" aria-labelledby="eoi-heading">
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="eoi-heading">Send an expression of interest</h2>
+        <p>
+          Fill in the short form below. Please email your resume to <a href={`mailto:${BUSINESS.email}?subject=Resume`}>{BUSINESS.email}</a> with
+          your name in the subject line, rather than attaching it here.
+        </p>
+      </div>
+      <div class="form-panel">
+        <Form id={form} subject="Website expression of interest" submitLabel="Send application" formType="Careers expression of interest">
+          <Field form={form} name="Name" label="Your name" required autocomplete="name" requiredMessage="Enter your name" />
+          <Field form={form} name="Phone" label="Phone" type="tel" required autocomplete="tel" inputmode="tel" requiredMessage="Enter a phone number we can call you on" width="medium" />
+          <Field form={form} name="email" label="Email" type="email" required autocomplete="email" requiredMessage="Enter your email address" />
+          <Field form={form} name="Suburb" label="Your suburb" required autocomplete="address-level2" requiredMessage="Enter your suburb" width="medium" />
+          <Choices
+            form={form}
+            legend="Role you are interested in"
+            type="radio"
+            name="Role"
+            options={['Support worker', 'Enrolled nurse', 'Registered nurse', 'Cleaner', 'Gardener']}
+            required
+            requiredMessage="Choose the role you are interested in"
+          />
+          <Choices form={form} legend="When are you available?" type="checkbox" name="Available" options={['Weekdays', 'Weekends', 'Nights']} optional inline />
+          <Choices
+            form={form}
+            legend="Do you have an NDIS Worker Screening Check?"
+            type="radio"
+            name="NDIS Worker Screening Check"
+            options={['Yes', 'In progress', 'No']}
+            required
+            requiredMessage="Choose whether you have an NDIS Worker Screening Check"
+            inline
+          />
+          <Choices
+            form={form}
+            legend="Do you have a driver's licence and a car?"
+            type="radio"
+            name="Driver's licence and car"
+            options={['Yes', 'No']}
+            required
+            requiredMessage="Choose whether you have a driver's licence and a car"
+            inline
+          />
+          <TextArea form={form} name="Message" label="Tell us a little about yourself" optional rows={4} maxlength={1500} />
+          <PrivacyConsent form={form} />
+        </Form>
+      </div>
+    </div>
+  </section>
+</Base>

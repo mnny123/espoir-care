@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Tabs from '../components/Tabs.astro';
+import EnquiryForm from '../components/forms/EnquiryForm.astro';
+import Icon from '../components/Icon.astro';
+import ResponsePromise from '../components/ResponsePromise.astro';
+import { BUSINESS } from '../config/site';
+import { url } from '../lib/url';
+
+const tabs = [
+  { id: 'self', label: 'I need support for myself', icon: 'user' },
+  { id: 'family', label: "I'm a family member or carer", icon: 'users' },
+  { id: 'coordinator', label: "I'm a support coordinator or plan manager", icon: 'briefcase' },
+  { id: 'health', label: "I'm a health professional or hospital", icon: 'stethoscope' },
+  { id: 'veteran', label: "I'm a veteran or DVA client", icon: 'medal' },
+  { id: 'work', label: 'I want to work at Espoir Care', icon: 'heart-handshake' },
+] as const;
+
+const forms = ['self', 'family', 'coordinator', 'health', 'veteran'] as const;
+---
+
+<Base
+  title="Make an enquiry | Espoir Care"
+  description="Tell us who you are and what you need, and we will call you back within 1 to 2 business days. For NDIS participants, families, veterans and referrers."
+  crumbs={[{ label: 'Make an enquiry', href: '/enquire/' }]}
+  hideStickyBar
+>
+  <PageHeader
+    title="Make an enquiry"
+    lead="Tell us a little about who needs support. We will call you back for a chat, with no obligation."
+  >
+    <div class="enquire-meta">
+      <ResponsePromise />
+      <p>Prefer to talk now? Call <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.</p>
+    </div>
+  </PageHeader>
+
+  <div class="section">
+    <div class="container">
+      <h2 class="who-heading">Who are you?</h2>
+      <Tabs label="Who are you?" tabs={[...tabs]}>
+        {
+          forms.map((kind) => {
+            const tab = tabs.find((t) => t.id === kind)!;
+            return (
+              <section class="tabpanel" id={kind}>
+                <h3 class="panel-heading">{tab.label}</h3>
+                <div class="form-panel">
+                  <EnquiryForm kind={kind} />
+                </div>
+              </section>
+            );
+          })
+        }
+        <section class="tabpanel" id="work">
+          <h3 class="panel-heading">I want to work at Espoir Care</h3>
+          <div class="form-panel">
+            <p>Thanks for your interest in working with us. You can read about the roles we hire and send us an expression of interest on our careers page.</p>
+            <a class="btn btn--primary" href={url('/careers/')}>Go to careers <Icon name="arrow-right" size={20} /></a>
+          </div>
+        </section>
+      </Tabs>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .enquire-meta {
+    margin-top: var(--space-5);
+  }
+  .enquire-meta p:last-child {
+    margin-bottom: 0;
+  }
+  .who-heading {
+    font-size: 1.5rem;
+  }
+  .panel-heading {
+    font-size: 1.375rem;
+  }
+</style>

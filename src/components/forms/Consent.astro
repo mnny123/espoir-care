@@ -1,0 +1,21 @@
+---
+// A required tick box. Never pre-ticked.
+import { fieldId } from './ids';
+
+interface Props {
+  form: string;
+  name: string;
+  requiredMessage: string;
+}
+const { form, name, requiredMessage } = Astro.props;
+const id = fieldId(form, name);
+const errorId = `${id}-error`;
+---
+
+<div class="field consent" data-field data-required-msg={requiredMessage}>
+  <p class="field-error" id={errorId} hidden></p>
+  <div class="choice">
+    <input type="checkbox" id={id} name={name} value="Yes" required aria-describedby={errorId} />
+    <label for={id}><slot /> <span class="req">(required)</span></label>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { BUSINESS } from '../config/site';
+import { url } from '../lib/url';
+---
+
+<Legal
+  title="Accessibility statement"
+  metaTitle="Accessibility statement | Espoir Care"
+  description="Our goal is for the Espoir Care website to meet WCAG 2.2 level AA. Find out what we have done and how to tell us about a problem."
+  path="/accessibility/"
+  lead="We want everyone to be able to use this website."
+>
+  <h2>Our goal</h2>
+  <p>We aim for this website to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.</p>
+
+  <h2>What we have done</h2>
+  <ul>
+    <li>Every page can be used with a keyboard, with a clear focus outline.</li>
+    <li>Pages have a "skip to content" link, clear headings and landmarks for screen readers.</li>
+    <li>All text and background colours have been checked for contrast.</li>
+    <li>Every form field has a visible label, and errors are explained in words, not just colour.</li>
+    <li>The site works with JavaScript turned off. Without it, the enquiry and contact page sections show one after another instead of as tabs.</li>
+    <li>Animation is kept to small hover effects, and these switch off if you have asked your device to reduce motion.</li>
+    <li>Text can be resized, and the site works on small screens without scrolling sideways.</li>
+    <li>Each time the site is updated, it is tested with automated accessibility tools (axe and HTML_CodeSniffer, through Pa11y).</li>
+  </ul>
+
+  <h2>Known issues</h2>
+  <ul>
+    <li>Our logo images are low resolution for now and may look soft if you zoom in a lot. We are replacing them.</li>
+    <li>[TODO add anything found in manual testing with screen readers, for example NVDA, VoiceOver and TalkBack]</li>
+  </ul>
+
+  <h2>Tell us about a problem</h2>
+  <p>If something on this site is hard to use, please tell us. Let us know the page and what went wrong, and we will try to fix it.</p>
+  <ul>
+    <li>Phone: <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></li>
+    <li>Email: <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></li>
+    <li>Online: <a href={url('/contact/')}>contact form</a></li>
+  </ul>
+  <p>{BUSINESS.responsePromise}</p>
+  <p>
+    If you are deaf, or have a hearing or speech impairment, you can contact us through the National Relay Service. Find out more at
+    <a href="https://www.accesshub.gov.au/about-the-nrs" rel="noopener">accesshub.gov.au</a>.
+  </p>
+
+  <h2>If you are not happy with our response</h2>
+  <p>
+    Please see our <a href={url('/complaints-and-feedback/')}>complaints and feedback page</a>. You can also contact the Australian Human Rights
+    Commission on 1300 656 419 or at <a href="https://humanrights.gov.au/" rel="noopener">humanrights.gov.au</a>.
+  </p>
+</Legal>

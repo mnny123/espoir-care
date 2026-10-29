@@ -1,0 +1,65 @@
+---
+import type { Crumb } from '../lib/schema';
+import { url } from '../lib/url';
+import Icon from './Icon.astro';
+
+interface Props {
+  crumbs: Crumb[];
+}
+const { crumbs } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <div class="container">
+    <ol>
+      {
+        crumbs.map((c, i) =>
+          i === crumbs.length - 1 ? (
+            <li>
+              <span aria-current="page">{c.label}</span>
+            </li>
+          ) : (
+            <li>
+              <a href={url(c.href)}>{c.label}</a>
+              <Icon name="chevron-right" size={16} />
+            </li>
+          ),
+        )
+      }
+    </ol>
+  </div>
+</nav>
+
+<style>
+  .breadcrumbs {
+    background: var(--lilac);
+    padding-top: var(--space-4);
+    font-size: var(--text-small);
+  }
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0 var(--space-1);
+  }
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin: 0;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+  li :global(svg) {
+    color: var(--slate);
+  }
+  span[aria-current] {
+    color: var(--slate);
+  }
+</style>

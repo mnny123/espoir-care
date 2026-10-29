@@ -1,0 +1,13 @@
+---
+import { url } from '../../lib/url';
+import Consent from './Consent.astro';
+
+interface Props {
+  form: string;
+}
+const { form } = Astro.props;
+---
+
+<Consent form={form} name="Privacy consent" requiredMessage="Tick the box to say you agree to how we use your details">
+  I agree to Espoir Care using these details to contact me, as set out in the <a href={url('/privacy-policy/')}>privacy policy</a>.
+</Consent>

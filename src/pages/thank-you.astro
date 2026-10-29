@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import { BUSINESS } from '../config/site';
+import { url } from '../lib/url';
+---
+
+<Base
+  title="Thank you, we have your message | Espoir Care"
+  description="Thanks for contacting Espoir Care. We reply to every enquiry within 1 to 2 business days."
+  crumbs={[{ label: 'Thank you', href: '/thank-you/' }]}
+  noindex
+>
+  <PageHeader title="Thank you, we have your message" lead={BUSINESS.responsePromise} />
+
+  <section class="section">
+    <div class="container prose">
+      <p>If it is urgent, please call us on <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.</p>
+      <div class="card emergency">
+        <p><strong>We are not an emergency service.</strong> If someone is in danger or very unwell, call 000.</p>
+      </div>
+      <h2>While you wait</h2>
+      <p>You might like to read more about how we can help.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={url('/services/')}>Our services <Icon name="arrow-right" size={20} /></a>
+        <a class="btn btn--secondary" href={url('/')}>Back to the homepage</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .emergency {
+    border-left: 6px solid var(--apricot);
+    margin-block: var(--space-5);
+  }
+</style>

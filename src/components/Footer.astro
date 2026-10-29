@@ -1,0 +1,205 @@
+---
+import { BUSINESS } from '../config/site';
+import { services, servicePath } from '../data/services';
+import { locations } from '../data/locations';
+import { url } from '../lib/url';
+import { rich } from '../lib/text';
+import Icon from './Icon.astro';
+
+const legal = [
+  { label: 'Privacy policy', href: '/privacy-policy/' },
+  { label: 'Terms and conditions', href: '/terms-and-conditions/' },
+  { label: 'Refund and cancellation policy', href: '/refund-and-cancellation-policy/' },
+  { label: 'Cookie policy', href: '/cookie-policy/' },
+  { label: 'Accessibility statement', href: '/accessibility/' },
+  { label: 'Complaints and feedback', href: '/complaints-and-feedback/' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href={url('/')} class="footer-logo">
+          <img src={url('/brand/logo-horizontal-white.png')} alt="Espoir Care home" width="579" height="125" loading="lazy" />
+        </a>
+        <p>Disability support and nursing care at home across Brisbane and the Redlands. Formerly Being Human Care.</p>
+        <!--
+          TODO: Registered NDIS provider logo. Only add this once you have
+          confirmed with the NDIS Quality and Safeguards Commission that you
+          are allowed to use it, and saved the file to /public/brand/.
+          <img src="/brand/ndis-registered-provider.png" alt="Registered NDIS provider" width="160" height="80" />
+        -->
+      </div>
+
+      <div>
+        <h2 class="footer-heading">Contact us</h2>
+        <ul class="footer-contact">
+          <li><Icon name="phone" size={20} /><a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></li>
+          <li><Icon name="mail" size={20} /><a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></li>
+          <li><Icon name="map-pin" size={20} /><span>Based in {BUSINESS.baseArea}</span></li>
+          <li><Icon name="clock" size={20} /><span>Opening hours: <Fragment set:html={rich(BUSINESS.hours)} /></span></li>
+        </ul>
+        <p class="footer-small">
+          {BUSINESS.legalName}, trading as Espoir Care<br />
+          ABN: <Fragment set:html={rich(BUSINESS.abn)} /><br />
+          NDIS registration number: <Fragment set:html={rich(BUSINESS.ndisRegNumber)} />
+        </p>
+        <ul class="footer-social" aria-label="Social media">
+          {
+            BUSINESS.social.map((s) => (
+              <li>
+                <a href={s.href} rel="noopener">
+                  {s.label}
+                  <span class="visually-hidden"> (opens the {s.label} website)</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="footer-heading">Services</h2>
+        <ul class="footer-links">
+          {
+            services.map((s) => (
+              <li>
+                <a href={url(servicePath(s.slug))}>{s.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="footer-heading">Areas we cover</h2>
+        <ul class="footer-links">
+          {
+            locations.map((l) => (
+              <li>
+                <a href={url(servicePath(l.slug))}>{l.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <h2 class="footer-heading">Information</h2>
+        <ul class="footer-links">
+          <li><a href={url('/about/')}>About us</a></li>
+          <li><a href={url('/careers/')}>Careers</a></li>
+          <li><a href={url('/enquire/')}>Make an enquiry</a></li>
+          <li><a href={url('/contact/#referral')}>Make a referral</a></li>
+          {
+            legal.map((l) => (
+              <li>
+                <a href={url(l.href)}>{l.label}</a>
+              </li>
+            ))
+          }
+          <li><a href={url('/cookie-policy/#cookie-settings')} data-cookie-settings>Cookie settings</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {new Date().getFullYear()} {BUSINESS.legalName}, trading as Espoir Care. Formerly Being Human Care.</p>
+      <p>We are not an emergency service. In an emergency, call 000.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    --focus: var(--white);
+    background: var(--plum);
+    color: var(--white);
+    padding-block: var(--space-7) var(--space-5);
+    font-size: var(--text-small);
+  }
+  .site-footer a {
+    color: var(--white);
+  }
+  .site-footer a:hover {
+    color: var(--lavender);
+  }
+  .footer-top {
+    display: grid;
+    gap: var(--space-6);
+  }
+  @media (min-width: 40em) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 64em) {
+    .footer-top {
+      grid-template-columns: 1.2fr 1.2fr 1.3fr 1fr;
+    }
+  }
+  .footer-logo {
+    margin-bottom: var(--space-4);
+  }
+  .footer-logo img {
+    height: 44px;
+    width: auto;
+  }
+  .footer-heading {
+    color: var(--white);
+    font-size: 1.0625rem;
+    margin-bottom: var(--space-3);
+  }
+  .footer-heading:not(:first-child) {
+    margin-top: var(--space-5);
+  }
+  .footer-contact,
+  .footer-links,
+  .footer-social {
+    list-style: none;
+    margin: 0 0 var(--space-4);
+    padding: 0;
+  }
+  .footer-contact li {
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: var(--space-2);
+    align-items: center;
+    min-height: var(--tap);
+    margin: 0;
+  }
+  .footer-contact :global(svg) {
+    color: var(--apricot);
+  }
+  .footer-links li {
+    margin: 0;
+  }
+  .footer-contact a,
+  .footer-logo,
+  .footer-links a,
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+  .footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-4);
+  }
+  .footer-social li {
+    margin: 0;
+  }
+  .footer-small {
+    line-height: 1.7;
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+  }
+  .footer-bottom p {
+    margin-bottom: var(--space-2);
+  }
+  .site-footer :global(.todo) {
+    font-size: 0.85em;
+  }
+</style>

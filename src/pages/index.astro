@@ -1,0 +1,284 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Reviews from '../components/Reviews.astro';
+import FaqList from '../components/FaqList.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { BUSINESS } from '../config/site';
+import { services, servicePath } from '../data/services';
+import { url } from '../lib/url';
+
+const faqs = [
+  {
+    q: 'Do I need to be with the NDIS to use Espoir Care?',
+    a: 'No. We support NDIS participants, veterans through DVA and people who pay privately.',
+  },
+  {
+    q: 'How much does it cost?',
+    a: 'For NDIS participants, we charge in line with the NDIS Pricing Arrangements. Approved DVA community nursing is paid for by DVA. For private clients, we give you a quote before we start.',
+  },
+  {
+    q: 'Which areas do you cover?',
+    a: 'We visit homes across Brisbane north, south and west and the Redlands, including Capalaba and Redland Bay. We also cover some nearby areas, so call us with your suburb if you are not sure.',
+  },
+  {
+    q: 'What happens after I send an enquiry?',
+    a: 'We reply within 1 to 2 business days. We will have a chat about what you need and answer your questions. If we are a good fit, we arrange a time to meet and plan your support together.',
+  },
+  {
+    q: 'Did you used to be Being Human Care?',
+    a: 'Yes. We changed our name from Being Human Care to Espoir Care. We are the same business, with the same phone number and email address.',
+  },
+];
+
+const steps = [
+  { title: 'You get in touch', text: 'Send an enquiry or call us. Tell us a little about who needs support and what would help.' },
+  { title: 'We call you back', text: 'We reply within 1 to 2 business days to talk through your needs, your funding and any questions.' },
+  { title: 'We plan your support together', text: 'We meet you, agree a plan that fits your routine and introduce the people who will support you.' },
+];
+
+const audiences = [
+  {
+    icon: 'heart-handshake',
+    title: 'People with disability',
+    text: 'NDIS participants of all ages who want support at home or out in the community.',
+    href: '/services/disability-support-services-brisbane/',
+    link: 'Disability support services',
+  },
+  {
+    icon: 'users',
+    title: 'Families and carers',
+    text: 'Help for the person you care for, and a break for you when you need it.',
+    href: '/services/respite-for-carers/',
+    link: 'Respite for carers',
+  },
+  {
+    icon: 'medal',
+    title: 'Veterans',
+    text: 'Nursing and home care for veterans with a DVA Gold or White Card.',
+    href: '/services/dva-community-nursing/',
+    link: 'DVA community nursing',
+  },
+  {
+    icon: 'hospital',
+    title: 'People leaving hospital',
+    text: 'Nursing and personal care at home while you recover.',
+    href: '/services/nursing-care-services-brisbane/',
+    link: 'In-home nursing',
+  },
+  {
+    icon: 'blocks',
+    title: 'Children and their families',
+    text: 'Support for young children and older kids, with time out for parents.',
+    href: '/services/ndis-child-care-services-brisbane/',
+    link: "Children's NDIS support",
+  },
+  {
+    icon: 'briefcase',
+    title: 'Coordinators and health professionals',
+    text: 'Refer a client to us and we will keep you up to date.',
+    href: '/contact/#referral',
+    link: 'Make a referral',
+  },
+] as const;
+---
+
+<Base
+  title="Disability support and nursing in Brisbane | Espoir Care"
+  description="Disability support and nursing care at home across Brisbane and the Redlands. Registered NDIS provider and DVA community nursing provider."
+  faqs={faqs}
+>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>Disability support and nursing care at home across Brisbane and the Redlands</h1>
+        <p class="lead">A registered NDIS provider and DVA community nursing provider, supporting people of all ages at home and in the community.</p>
+        <div class="btn-row btn-row--stack">
+          <a class="btn btn--primary" href={url('/enquire/')}>Make an enquiry</a>
+          <a class="btn btn--secondary" href={BUSINESS.phoneHref}><Icon name="phone" size={20} /> Call {BUSINESS.phone}</a>
+        </div>
+      </div>
+      <aside class="card hero-card" aria-labelledby="glance-heading">
+        <h2 id="glance-heading">At a glance</h2>
+        <ul class="check-list">
+          <li><Icon name="check" size={22} /><span>Registered NDIS provider for Supported Independent Living</span></li>
+          <li><Icon name="check" size={22} /><span>DVA contracted community nursing provider</span></li>
+          <li><Icon name="check" size={22} /><span>Veterans' Home Care provider</span></li>
+          <li><Icon name="check" size={22} /><span>Based in the Redlands, visiting homes across Brisbane</span></li>
+          <li><Icon name="check" size={22} /><span>Formerly Being Human Care</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="services-heading">How we can help</h2>
+        <p>From a few hours of help each week to nursing care and support around the clock. Choose a service to find out who it is for and how it is funded.</p>
+      </div>
+      <div class="grid grid--3">
+        {services.map((s) => <ServiceCard service={s} />)}
+      </div>
+      <p class="more-link"><a href={url('/services/')}>Compare all our services <Icon name="arrow-right" size={18} /></a></p>
+    </div>
+  </section>
+
+  <section class="section section--lilac" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="how-heading">How it works</h2>
+        <p>Getting started is simple, and there is no obligation.</p>
+      </div>
+      <ol class="steps grid grid--3">
+        {
+          steps.map((s, i) => (
+            <li class="card">
+              <span class="step-number" aria-hidden="true">{i + 1}</span>
+              <h3>
+                <span class="visually-hidden">Step {i + 1}: </span>
+                {s.title}
+              </h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="who-heading">
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="who-heading">Who we help</h2>
+      </div>
+      <div class="grid grid--3">
+        {
+          audiences.map((a) => (
+            <div class="card link-card">
+              <span class="icon-badge">
+                <Icon name={a.icon} size={26} />
+              </span>
+              <h3>{a.title}</h3>
+              <p>{a.text}</p>
+              <p class="card-link">
+                <a href={url(a.href)}>{a.link}</a>
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--lilac" aria-labelledby="reviews-heading">
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="reviews-heading">What families say</h2>
+      </div>
+      <Reviews />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="team-heading">
+    <div class="container split">
+      <div>
+        <h2 id="team-heading">A local team you can get to know</h2>
+        <p>We are based in the Redlands and visit homes across Brisbane. We try to keep the same small group of people with each client, so you see familiar faces.</p>
+        <p><a class="standalone-link" href={url('/about/')}>About Espoir Care</a></p>
+      </div>
+      <!-- TODO: replace with a real team photo -->
+      <PhotoPlaceholder label="Team photo coming soon" />
+    </div>
+  </section>
+
+  <section class="section section--lilac" aria-labelledby="faq-heading">
+    <div class="container">
+      <h2 id="faq-heading">Common questions</h2>
+      <FaqList faqs={faqs} />
+    </div>
+  </section>
+
+  <CtaBand heading="Ready to talk?" text="Send us an enquiry or give us a call. We will listen, answer your questions and explain your options." />
+</Base>
+
+<style>
+  .hero {
+    background: var(--lilac);
+    padding-block: var(--space-5) var(--space-7);
+  }
+  @media (min-width: 48em) {
+    .hero {
+      padding-block: var(--space-8);
+    }
+  }
+  .hero-inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+  @media (min-width: 56em) {
+    .hero-inner {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      align-items: center;
+      gap: var(--space-7);
+    }
+  }
+  .hero h1 {
+    font-size: clamp(1.625rem, 1.2rem + 2.6vw, 3.25rem);
+    margin-bottom: var(--space-3);
+  }
+  .hero .lead {
+    margin-bottom: var(--space-5);
+  }
+  @media (max-width: 30em) {
+    .hero {
+      padding-top: var(--space-4);
+    }
+    .hero .lead {
+      font-size: 1em;
+      margin-bottom: var(--space-4);
+    }
+  }
+  .hero-card h2 {
+    font-size: 1.25rem;
+  }
+  .hero-card {
+    border-color: var(--border);
+  }
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .steps li {
+    margin: 0;
+  }
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    background: var(--apricot);
+    color: var(--plum);
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+  }
+  .more-link {
+    margin-top: var(--space-6);
+  }
+  .more-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 700;
+    min-height: var(--tap);
+  }
+  .card-link {
+    margin-top: auto;
+    font-weight: 700;
+  }
+</style>

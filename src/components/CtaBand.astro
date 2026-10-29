@@ -1,0 +1,33 @@
+---
+import { BUSINESS } from '../config/site';
+import { url } from '../lib/url';
+import Icon from './Icon.astro';
+import ResponsePromise from './ResponsePromise.astro';
+
+interface Props {
+  heading?: string;
+  text?: string;
+  enquireHref?: string;
+}
+const {
+  heading = 'Talk to us about support',
+  text = 'Tell us a little about what you need. We will call you back for a chat, with no obligation.',
+  enquireHref = '/enquire/',
+} = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>{heading}</h2>
+        <p>{text}</p>
+        <div style="margin-top: var(--space-4)"><ResponsePromise /></div>
+      </div>
+      <div class="btn-row btn-row--stack">
+        <a class="btn btn--primary" href={url(enquireHref)}>Make an enquiry</a>
+        <a class="btn btn--secondary" href={BUSINESS.phoneHref}><Icon name="phone" size={20} /> Call {BUSINESS.phone}</a>
+      </div>
+    </div>
+  </div>
+</section>

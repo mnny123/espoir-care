@@ -1,0 +1,177 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { BUSINESS } from '../config/site';
+import { url } from '../lib/url';
+---
+
+<Legal
+  title="Privacy policy"
+  metaTitle="Privacy policy | Espoir Care"
+  description="How Espoir Care collects, uses, stores and protects your personal and health information under the Privacy Act 1988 and the Australian Privacy Principles."
+  path="/privacy-policy/"
+  lead="How we collect, use and look after your personal information."
+>
+  <h2>About this policy</h2>
+  <p>
+    This policy explains how {BUSINESS.legalName}, trading as Espoir Care (formerly Being Human Care), handles personal information. In this policy "we",
+    "us" and "our" mean Espoir Care.
+  </p>
+  <p>
+    We follow the Privacy Act 1988 (Cth) and the Australian Privacy Principles. Because we provide health services, the Privacy Act applies to us
+    whatever the size of our business. We also follow the NDIS Code of Conduct, the NDIS Practice Standards and our obligations to the Department of
+    Veterans' Affairs (DVA).
+  </p>
+
+  <h2>Health information is sensitive information</h2>
+  <p>
+    Information about your health, disability or support needs is "sensitive information" under the Privacy Act. We only collect it when we need it to
+    reply to you or to provide your support. We only collect it with your consent or where the law allows. We hold it to a higher standard of care than
+    other information.
+  </p>
+
+  <h2>What we collect</h2>
+  <h3>Through our website forms</h3>
+  <div class="table-wrap">
+    <table>
+      <caption class="visually-hidden">Information collected by each website form</caption>
+      <thead>
+        <tr>
+          <th scope="col">Form</th>
+          <th scope="col">What we ask for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Enquiry form</th>
+          <td>
+            First and last name, phone, email, preferred contact method, suburb, services you are interested in, your message, main language and whether
+            you need an interpreter (both optional). People needing support and families are asked how the support is funded. Family members are
+            asked their relationship to the person. Coordinators and health professionals are asked for their organisation, and health professionals
+            for their role. Veterans are asked for their DVA card type and whether they have a referral.
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">General question</th>
+          <td>Name, phone, email, your question and main language (optional).</td>
+        </tr>
+        <tr>
+          <th scope="row">Referral form</th>
+          <td>
+            The referrer's name, organisation (optional), role or relationship, phone and email. The participant's name, phone or best contact, suburb,
+            date of birth, main language and interpreter needs (optional), funding type, NDIS number (optional), DVA file number (optional), the services
+            requested, a preferred start date, a short description of the support needed and any risks for staff (optional). We also record that the
+            participant or their guardian has agreed to the referral.
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Careers form</th>
+          <td>
+            Name, phone, email, suburb, the role you are interested in, your availability and your message. We also ask whether you have an NDIS
+            Worker Screening Check and whether you have a driver's licence and car. Resumes are sent to us by email.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Our enquiry forms do not ask for NDIS numbers, dates of birth or diagnoses. Please do not include detailed medical information in a message box. We
+    will ask for what we need when we talk with you.
+  </p>
+
+  <h3>When you become a client</h3>
+  <p>
+    To provide support safely we collect more information directly from you, or from people you have authorised, such as your care needs, health
+    information, medication, emergency contacts, NDIS plan details or DVA details. We explain what we need and why at the time. [TODO list your client
+    record system and the forms used at intake]
+  </p>
+
+  <h3>When you use our website</h3>
+  <p>
+    If you choose "Accept analytics", Google Analytics collects information about how you use the site, such as the pages you visit, your device and
+    your general location. If you choose "Decline" or make no choice, Google Analytics does not load. Read our <a href={url('/cookie-policy/')}>cookie
+    policy</a> for details.
+  </p>
+
+  <h2>Why we collect it</h2>
+  <ul>
+    <li>To reply to your enquiry, question or referral</li>
+    <li>To work out whether we can help and which services suit you</li>
+    <li>To plan and provide your support safely</li>
+    <li>To claim payment from the NDIS, a plan manager, DVA or you</li>
+    <li>To meet our legal, NDIS and DVA obligations</li>
+    <li>To consider you for a job, if you apply to work with us</li>
+    <li>To improve our website, only if you accept analytics</li>
+  </ul>
+  <p>We do not sell your information. We do not use it for marketing unless you ask us to.</p>
+
+  <h2>How our website forms send your details</h2>
+  <p>
+    When you send a form, the details are passed to a service called Web3Forms, which emails them to our inbox at {BUSINESS.email}. Web3Forms may process
+    this information on servers outside Australia. [TODO check Web3Forms' current privacy terms, where it processes data and whether it keeps a copy of
+    submissions, then update this paragraph]
+  </p>
+  <p>Our email is hosted by [TODO name your email provider, for example Google Workspace or Microsoft 365].</p>
+
+  <h2>Who sees your information</h2>
+  <p>Only people who need it to do their job. That can include:</p>
+  <ul>
+    <li>Our staff who are arranging or providing your support</li>
+    <li>With your consent, your support coordinator, plan manager, GP, hospital team or other providers</li>
+    <li>The NDIA, the NDIS Quality and Safeguards Commission or DVA, when we need to for funding, reporting or compliance</li>
+    <li>Companies that provide services to us, such as email, Web3Forms and, if you accept analytics, Google</li>
+    <li>Anyone else when the law requires it, or to lessen a serious threat to someone's life, health or safety</li>
+  </ul>
+  <p>
+    Some of these services may store or process information overseas. When that happens we take reasonable steps to make sure the information is
+    protected in line with the Australian Privacy Principles.
+  </p>
+
+  <h2>How we store and protect it</h2>
+  <p>
+    We take reasonable steps to protect your information from misuse, loss and unauthorised access. This includes password protected systems and limiting
+    access to staff who need it. [TODO describe your main systems and security measures]
+  </p>
+  <p>
+    We keep records for as long as we need them and for as long as the law, the NDIS rules and DVA require. After that we securely destroy or de-identify
+    them. [TODO confirm retention periods, for example how long you keep client records, enquiries that do not go ahead and job applications]
+  </p>
+
+  <h2>Using a pseudonym</h2>
+  <p>
+    You can ask a general question without giving your real name. To provide support, or to reply to an enquiry, we will need your real contact details.
+  </p>
+
+  <h2>Accessing or correcting your information</h2>
+  <p>
+    You can ask to see the information we hold about you, or ask us to correct it. Call us on <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a> or email
+    <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>. We will respond within a reasonable time, usually 30 days. There is no charge to make a
+    request. If we cannot give you access, we will tell you why in writing.
+  </p>
+
+  <h2>Data breaches</h2>
+  <p>
+    If a data breach is likely to cause you serious harm, we will tell you and the Office of the Australian Information Commissioner (OAIC), as the
+    Notifiable Data Breaches scheme requires.
+  </p>
+
+  <h2>Making a privacy complaint</h2>
+  <p>
+    If you are worried about how we have handled your information, please contact us first so we can try to fix it. See our
+    <a href={url('/complaints-and-feedback/')}>complaints and feedback page</a> for how we handle complaints.
+  </p>
+  <p>If you are not happy with our response within 30 days, you can complain to the OAIC:</p>
+  <ul>
+    <li>Phone: 1300 363 992</li>
+    <li>Website: <a href="https://www.oaic.gov.au/" rel="noopener">oaic.gov.au</a></li>
+  </ul>
+
+  <h2>Contact us about privacy</h2>
+  <p>
+    Privacy officer: [TODO name or role]<br />
+    Phone: <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a><br />
+    Email: <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
+  </p>
+
+  <h2>Changes to this policy</h2>
+  <p>We may update this policy from time to time. The latest version will always be on this page.</p>
+</Legal>

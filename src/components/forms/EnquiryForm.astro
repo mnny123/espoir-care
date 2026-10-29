@@ -1,0 +1,139 @@
+---
+// The short enquiry form, tailored to who is asking. Only asks what we need to
+// call someone back. No NDIS numbers, dates of birth or diagnoses.
+import Form from './Form.astro';
+import Field from './Field.astro';
+import TextArea from './TextArea.astro';
+import Select from './Select.astro';
+import Choices from './Choices.astro';
+import PrivacyConsent from './PrivacyConsent.astro';
+import Icon from '../Icon.astro';
+import { services } from '../../data/services';
+import { url } from '../../lib/url';
+
+type Kind = 'self' | 'family' | 'coordinator' | 'health' | 'veteran';
+interface Props {
+  kind: Kind;
+}
+const { kind } = Astro.props;
+const form = `enquiry-${kind}`;
+
+const subjects: Record<Kind, string> = {
+  self: 'Website enquiry: person needing support',
+  family: 'Website enquiry: family member or carer',
+  coordinator: 'Website enquiry: support coordinator or plan manager',
+  health: 'Website enquiry: health professional or hospital',
+  veteran: 'Website enquiry: veteran or DVA client',
+};
+
+const suburbLabel: Record<Kind, string> = {
+  self: 'Your suburb',
+  family: 'Suburb where support is needed',
+  coordinator: "Participant's suburb",
+  health: "Patient's suburb",
+  veteran: 'Your suburb',
+};
+
+const fundingOptions = ['NDIS self managed', 'NDIS plan managed', 'NDIS agency managed (NDIA)', 'DVA', 'Private (paying myself)', 'Not sure'];
+
+const veteranServices = [
+  'DVA community nursing',
+  'In-home nursing',
+  'Personal care',
+  'Domestic cleaning',
+  'Gardening',
+  'Respite for carers',
+  'Not sure yet',
+];
+const serviceOptions = kind === 'veteran' ? veteranServices : [...services.map((s) => s.name), 'Not sure yet'];
+---
+
+<Form id={form} subject={subjects[kind]} submitLabel="Send enquiry" formType={subjects[kind]}>
+  {
+    kind === 'health' && (
+      <div class="form-note">
+        <Icon name="info" size={22} />
+        <p>
+          This form is for a quick question or a callback. To make a formal referral with patient details, please use our{' '}
+          <a href={url('/contact/#referral')}>referral form</a>.
+        </p>
+      </div>
+    )
+  }
+
+  {
+    (kind === 'coordinator' || kind === 'health') && (
+      <Field form={form} name="Organisation" label="Organisation name" required autocomplete="organization" requiredMessage="Enter your organisation name" />
+    )
+  }
+  {kind === 'health' && <Field form={form} name="Role" label="Your role" required autocomplete="organization-title" requiredMessage="Enter your role" />}
+
+  <Field form={form} name="First name" label="First name" required autocomplete="given-name" requiredMessage="Enter your first name" />
+  <Field form={form} name="Last name" label="Last name" required autocomplete="family-name" requiredMessage="Enter your last name" />
+  <Field form={form} name="Phone" label="Phone" type="tel" required autocomplete="tel" inputmode="tel" requiredMessage="Enter a phone number we can call you on" width="medium" />
+  <Field form={form} name="email" label="Email" type="email" required autocomplete="email" requiredMessage="Enter your email address" />
+  <Choices
+    form={form}
+    legend="How would you like us to contact you?"
+    type="radio"
+    name="Preferred contact method"
+    options={['Phone call', 'Email', 'Text message']}
+    optional
+    inline
+  />
+
+  {
+    kind === 'family' && (
+      <Field
+        form={form}
+        name="Relationship to the person"
+        label="Your relationship to the person"
+        hint="For example parent, partner, son or daughter, friend"
+        required
+        requiredMessage="Enter your relationship to the person who needs support"
+      />
+    )
+  }
+
+  <Field form={form} name="Suburb" label={suburbLabel[kind]} required autocomplete={kind === 'self' || kind === 'veteran' ? 'address-level2' : 'off'} requiredMessage="Enter the suburb, so we can check we visit your area" width="medium" />
+
+  {
+    (kind === 'self' || kind === 'family') && (
+      <Select form={form} name="Funding" label="How is the support funded?" options={fundingOptions} required requiredMessage="Choose how the support is funded, or choose Not sure" />
+    )
+  }
+
+  {
+    kind === 'veteran' && (
+      <>
+        <Choices form={form} legend="DVA card type" type="radio" name="DVA card type" options={['Gold Card', 'White Card', 'Not sure']} required requiredMessage="Choose your DVA card type, or choose Not sure" inline />
+        <Choices
+          form={form}
+          legend="Do you have a referral from a GP or hospital?"
+          type="radio"
+          name="Has GP or hospital referral"
+          options={['Yes', 'No', 'Not sure']}
+          hint="DVA community nursing needs a referral. If you do not have one yet, we can explain how to get one."
+          required
+          requiredMessage="Choose whether you have a referral, or choose Not sure"
+          inline
+        />
+      </>
+    )
+  }
+
+  <Choices form={form} legend="Services you are interested in" type="checkbox" name="Service" options={serviceOptions} optional columns />
+
+  <TextArea
+    form={form}
+    name="Message"
+    label="Anything else you would like to tell us?"
+    hint="Please do not include medical details. We will ask what we need when we talk."
+    optional
+  />
+
+  <Field form={form} name="Main language" label="Main language spoken" optional width="medium" />
+  <Choices form={form} legend="Do you need an interpreter?" type="radio" name="Interpreter needed" options={['Yes', 'No']} optional inline />
+
+  <PrivacyConsent form={form} />
+</Form>

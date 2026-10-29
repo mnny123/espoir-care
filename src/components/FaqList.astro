@@ -1,0 +1,26 @@
+---
+import type { Faq } from '../lib/schema';
+import { rich } from '../lib/text';
+import Icon from './Icon.astro';
+
+interface Props {
+  faqs: Faq[];
+}
+const { faqs } = Astro.props;
+---
+
+<div class="faq">
+  {
+    faqs.map((f) => (
+      <details>
+        <summary>
+          <span>{f.q}</span>
+          <Icon name="chevron-down" size={22} />
+        </summary>
+        <div class="faq-answer">
+          <p set:html={rich(f.a)} />
+        </div>
+      </details>
+    ))
+  }
+</div>

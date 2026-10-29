@@ -1,0 +1,36 @@
+---
+import { fieldId } from './ids';
+
+interface Props {
+  form: string;
+  name: string;
+  label: string;
+  required?: boolean;
+  optional?: boolean;
+  hint?: string;
+  requiredMessage?: string;
+  rows?: number;
+  maxlength?: number;
+}
+const { form, name, label, required = false, optional = false, hint, requiredMessage, rows = 4, maxlength = 2000 } = Astro.props;
+const id = fieldId(form, name);
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = `${id}-error`;
+---
+
+<div class="field" data-field data-required-msg={requiredMessage ?? `Enter ${label.toLowerCase()}`}>
+  <label for={id}>
+    {label}
+    {required && <span class="req">(required)</span>}
+    {optional && <span class="opt">(optional)</span>}
+  </label>
+  {hint && <p class="hint" id={hintId}>{hint}</p>}
+  <p class="field-error" id={errorId} hidden></p>
+  <textarea
+    id={id}
+    name={name}
+    rows={rows}
+    maxlength={maxlength}
+    required={required}
+    aria-describedby={[hintId, errorId].filter(Boolean).join(' ')}></textarea>
+</div>

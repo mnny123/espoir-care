@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Tabs from '../components/Tabs.astro';
+import Icon from '../components/Icon.astro';
+import ResponsePromise from '../components/ResponsePromise.astro';
+import Form from '../components/forms/Form.astro';
+import Field from '../components/forms/Field.astro';
+import TextArea from '../components/forms/TextArea.astro';
+import PrivacyConsent from '../components/forms/PrivacyConsent.astro';
+import ReferralForm from '../components/forms/ReferralForm.astro';
+import { BUSINESS } from '../config/site';
+import { locations } from '../data/locations';
+import { servicePath } from '../data/services';
+import { rich } from '../lib/text';
+import { url } from '../lib/url';
+
+const general = 'general-form';
+---
+
+<Base
+  title="Contact us | Espoir Care"
+  description="Call 0412 632 913, email us or send a message or referral online. We reply to every enquiry within 1 to 2 business days."
+  crumbs={[{ label: 'Contact', href: '/contact/' }]}
+  hideStickyBar
+>
+  <PageHeader title="Contact us" lead="Call, email or send us a message. If you are making a referral, use the referral form below." />
+
+  <div class="section">
+    <div class="container contact-grid">
+      <aside class="contact-details" aria-labelledby="details-heading">
+        <div class="card card--lavender">
+          <h2 id="details-heading">Contact details</h2>
+          <ul class="contact-list">
+            <li>
+              <Icon name="phone" />
+              <div><strong>Phone</strong><br /><a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></div>
+            </li>
+            <li>
+              <Icon name="mail" />
+              <div><strong>Email</strong><br /><a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></div>
+            </li>
+            <li>
+              <Icon name="clock" />
+              <div><strong>Opening hours</strong><br /><Fragment set:html={rich(BUSINESS.hours)} /></div>
+            </li>
+            <li>
+              <Icon name="map-pin" />
+              <div>
+                <strong>Where we are</strong><br />
+                We are based in {BUSINESS.baseArea} and we come to you. We visit homes across Brisbane north, south and west and the Redlands.
+                <!--
+                  No street address or "Get directions" link on purpose, at the owner's request.
+                  TODO: if you open an office for visitors, add the address here with a
+                  Google Maps directions link (https://www.google.com/maps/dir/?api=1&destination=...).
+                -->
+              </div>
+            </li>
+          </ul>
+          <ResponsePromise />
+        </div>
+        <div class="card emergency">
+          <h2 class="small-heading">In an emergency</h2>
+          <p>We are not an emergency service. If someone is in danger or very unwell, call <strong>000</strong>.</p>
+        </div>
+        <div class="card">
+          <h2 class="small-heading">Areas we cover</h2>
+          <ul class="area-links">
+            {
+              locations.map((l) => (
+                <li>
+                  <a href={url(servicePath(l.slug))}>{l.name}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </aside>
+      <div>
+        <h2>Send us a message</h2>
+        <Tabs label="What would you like to do?" tabs={[{ id: 'general', label: 'General question', icon: 'message' }, { id: 'referral', label: 'Make a referral', icon: 'briefcase' }]} variant="two">
+          <section class="tabpanel" id="general">
+            <h3>General question</h3>
+            <div class="form-panel">
+              <Form id={general} subject="Website question" submitLabel="Send message" formType="General question">
+                <Field form={general} name="Name" label="Your name" required autocomplete="name" requiredMessage="Enter your name" />
+                <Field form={general} name="Phone" label="Phone" type="tel" required autocomplete="tel" inputmode="tel" requiredMessage="Enter a phone number we can call you on" width="medium" />
+                <Field form={general} name="email" label="Email" type="email" required autocomplete="email" requiredMessage="Enter your email address" />
+                <TextArea form={general} name="Message" label="Your question" required requiredMessage="Enter your question" hint="Please do not include medical details." />
+                <Field form={general} name="Main language" label="Main language spoken" optional width="medium" />
+                <PrivacyConsent form={general} />
+              </Form>
+            </div>
+          </section>
+          <section class="tabpanel" id="referral">
+            <h3>Make a referral</h3>
+            <p>For support coordinators, health professionals, families or self referral.</p>
+            <div class="form-panel">
+              <ReferralForm />
+            </div>
+          </section>
+        </Tabs>
+      </div>
+
+    </div>
+  </div>
+</Base>
+
+<style>
+  .contact-details {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .contact-grid {
+    display: grid;
+    gap: var(--space-7);
+  }
+  @media (min-width: 56em) {
+    .contact-grid {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: start;
+    }
+  }
+  .contact-list {
+    list-style: none;
+    padding: 0;
+  }
+  .contact-list li {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: var(--space-3);
+    margin: 0 0 var(--space-4);
+  }
+  .contact-list :global(svg) {
+    color: var(--purple);
+    margin-top: 0.2em;
+  }
+  .small-heading {
+    font-size: 1.25rem;
+  }
+  .emergency {
+    border-left: 6px solid var(--apricot);
+  }
+  .area-links {
+    padding-left: 1.1em;
+    margin: 0;
+  }
+  .area-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+</style>

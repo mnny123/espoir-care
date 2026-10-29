@@ -1,0 +1,60 @@
+---
+// Story template: situation, what we did, what changed and a quote.
+// Pages are only built once SHOW_STORIES is true.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { SHOW_STORIES } from '../../config/site';
+import { stories, type Story } from '../../data/stories';
+import { serviceBySlug } from '../../data/services';
+
+export function getStaticPaths() {
+  if (!SHOW_STORIES) return [];
+  return stories.map((story) => ({ params: { slug: story.slug }, props: { story } }));
+}
+
+const { story } = Astro.props as { story: Story };
+---
+
+<Base
+  title={`${story.title} | Espoir Care`}
+  description={story.metaDescription}
+  crumbs={[
+    { label: 'Stories', href: '/stories/' },
+    { label: story.title, href: `/stories/${story.slug}/` },
+  ]}
+>
+  <PageHeader title={story.title} lead={story.person} />
+  <article class="section">
+    <div class="container prose">
+      <h2>The situation</h2>
+      <p>{story.situation}</p>
+      <h2>What we did</h2>
+      <p>{story.whatWeDid}</p>
+      <h2>What changed</h2>
+      <p>{story.whatChanged}</p>
+      <figure class="card card--lavender review">
+        <Icon name="quote" size={28} class="quote-icon" />
+        <blockquote><p>{story.quote}</p></blockquote>
+        <figcaption>{story.quoteBy}</figcaption>
+      </figure>
+    </div>
+  </article>
+  {
+    story.services.length > 0 && (
+      <section class="section section--lilac" aria-labelledby="services-heading">
+        <div class="container">
+          <h2 id="services-heading">Services in this story</h2>
+          <div class="grid grid--3">
+            {story.services.map((slug) => (
+              <ServiceCard service={serviceBySlug(slug)} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+  <CtaBand />
+</Base>

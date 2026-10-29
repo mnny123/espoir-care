@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { serviceBySlug, servicePath } from '../../data/services';
+import { locations } from '../../data/locations';
+import { url } from '../../lib/url';
+
+const groups = [
+  {
+    heading: 'Living and short stays',
+    text: 'Support where you live, or a short stay away from home.',
+    slugs: ['supported-independent-living', 'short-term-accommodation-brisbane'],
+  },
+  {
+    heading: 'Nursing',
+    text: 'Care from registered and enrolled nurses, at home.',
+    slugs: ['community-nursing', 'dva-community-nursing', 'nursing-care-services-brisbane'],
+  },
+  {
+    heading: 'Daily support at home',
+    text: 'Help with personal care, meals, routines and running the home.',
+    slugs: [
+      'home-personal-care',
+      'disability-support-services-brisbane',
+      'home-care-for-disabled-adults-brisbane',
+      'assist-personal-activities-brisbane',
+    ],
+  },
+  {
+    heading: 'Around the house and garden',
+    text: 'Practical help to keep your home and yard clean and safe.',
+    slugs: ['domestic-cleaning', 'gardening'],
+  },
+  {
+    heading: 'Out and about',
+    text: 'Support to get out, get around and take part.',
+    slugs: ['community-access', 'disability-travel-support-services-brisbane'],
+  },
+  {
+    heading: 'Children, families and carers',
+    text: 'Support for kids and a break for the people who care for them.',
+    slugs: ['ndis-child-care-services-brisbane', 'respite-for-carers'],
+  },
+];
+---
+
+<Base
+  title="Our services: NDIS, nursing and DVA care | Espoir Care"
+  description="Supported Independent Living, nursing, personal care, cleaning, gardening, community access, respite and more, across Brisbane and the Redlands."
+  crumbs={[{ label: 'Services', href: '/services/' }]}
+>
+  <PageHeader
+    title="Our services"
+    lead="We support people with disability, veterans and families at home and in the community. Most people use a mix of services, and we help you work out what fits."
+  />
+
+  {
+    groups.map((g, i) => (
+      <section class:list={['section', { 'section--lilac': i % 2 === 1 }]} aria-labelledby={`group-${i}`}>
+        <div class="container">
+          <div class="section-intro">
+            <h2 id={`group-${i}`}>{g.heading}</h2>
+            <p>{g.text}</p>
+          </div>
+          <div class="grid grid--3">
+            {g.slugs.map((slug) => (
+              <ServiceCard service={serviceBySlug(slug)} />
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section" aria-labelledby="areas-heading">
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="areas-heading">Areas we cover</h2>
+        <p>We are based in the Redlands and visit homes across Brisbane.</p>
+      </div>
+      <ul class="link-list">
+        {
+          locations.map((l) => (
+            <li>
+              <a href={url(servicePath(l.slug))}>{l.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand heading="Not sure which service you need?" text="That is fine. Tell us what is going on and we will help you work out the right support." />
+</Base>

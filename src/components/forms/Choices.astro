@@ -1,0 +1,61 @@
+---
+// A group of radio buttons or checkboxes inside a fieldset with a legend.
+// Checkboxes each get their own name (for example "Service: Personal care")
+// so every ticked box shows up clearly in the email.
+import { fieldId } from './ids';
+
+interface Props {
+  form: string;
+  legend: string;
+  type: 'radio' | 'checkbox';
+  // For radios: the shared field name. For checkboxes: a prefix for each box.
+  name: string;
+  options: string[];
+  required?: boolean;
+  optional?: boolean;
+  hint?: string;
+  requiredMessage?: string;
+  columns?: boolean;
+  inline?: boolean;
+}
+const { form, legend, type, name, options, required = false, optional = false, hint, requiredMessage, columns = false, inline = false } =
+  Astro.props;
+const base = fieldId(form, name);
+const hintId = hint ? `${base}-hint` : undefined;
+const errorId = `${base}-error`;
+---
+
+<fieldset
+  class:list={['field', 'choices', { 'choices--columns': columns, 'choices--inline': inline }]}
+  data-field
+  data-group={type === 'radio' && required ? 'radio' : undefined}
+  data-required-msg={requiredMessage ?? `Choose an option for ${legend.toLowerCase()}`}
+  aria-describedby={[hintId, errorId].filter(Boolean).join(' ')}
+>
+  <legend>
+    {legend}
+    {required && <span class="req">(required)</span>}
+    {optional && <span class="opt">(optional)</span>}
+  </legend>
+  {hint && <p class="hint" id={hintId}>{hint}</p>}
+  <p class="field-error" id={errorId} hidden></p>
+  <div class="choices-list">
+    {
+      options.map((o, i) => {
+        const id = `${base}-${i}`;
+        return (
+          <div class="choice">
+            <input
+              type={type}
+              id={id}
+              name={type === 'radio' ? name : `${name}: ${o}`}
+              value={type === 'radio' ? o : 'Yes'}
+              required={type === 'radio' && required}
+            />
+            <label for={id}>{o}</label>
+          </div>
+        );
+      })
+    }
+  </div>
+</fieldset>

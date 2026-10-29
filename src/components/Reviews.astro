@@ -1,0 +1,40 @@
+---
+import { BUSINESS, isTodo } from '../config/site';
+import { reviews } from '../data/reviews';
+import Icon from './Icon.astro';
+---
+
+<div class="grid grid--2">
+  {
+    reviews.map((r) => (
+      <figure class="card review">
+        <Icon name="quote" size={28} class="quote-icon" />
+        <blockquote>
+          <p>{r.text}</p>
+        </blockquote>
+        <figcaption>{r.name}</figcaption>
+      </figure>
+    ))
+  }
+</div>
+<p class="muted small reviews-note">
+  Reviews written when we were Being Human Care.
+  {
+    isTodo(BUSINESS.googleProfileUrl) ? (
+      <>
+        {/* TODO: set googleProfileUrl in src/config/site.ts to turn this into a link. */}
+        <mark class="todo">TODO GOOGLE PROFILE URL</mark>
+      </>
+    ) : (
+      <a href={BUSINESS.googleProfileUrl} rel="noopener">
+        See our Google Business profile
+      </a>
+    )
+  }
+</p>
+
+<style>
+  .reviews-note {
+    margin-top: var(--space-4);
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+import { url } from '../lib/url';
+---
+
+<!--
+  Hidden until JavaScript shows it. With JavaScript off, analytics can never
+  load, so there is nothing to ask about.
+-->
+<section class="cookie-banner" aria-labelledby="cookie-banner-heading" hidden data-cookie-banner tabindex="-1">
+  <div class="container cookie-inner">
+    <div>
+      <h2 id="cookie-banner-heading">Can we use analytics cookies?</h2>
+      <p>
+        We'd like to use Google Analytics to see which pages are used. It stays off unless you say yes.{' '}
+        <a href={url('/cookie-policy/')}>Cookie policy</a>
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn btn--secondary" data-consent="granted">Accept analytics</button>
+      <button type="button" class="btn btn--secondary" data-consent="denied">Decline</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const KEY = 'espoir-consent';
+  const banner = document.querySelector<HTMLElement>('[data-cookie-banner]');
+
+  function getChoice() {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  function clearAnalyticsCookies() {
+    for (const cookie of document.cookie.split(';')) {
+      const name = cookie.split('=')[0].trim();
+      if (!name.startsWith('_ga')) continue;
+      const parts = location.hostname.split('.');
+      // Remove from this host and every parent domain GA may have used.
+      for (let i = 0; i < parts.length - 1; i++) {
+        const domain = parts.slice(i).join('.');
+        document.cookie = `${name}=; Max-Age=0; path=/; domain=${domain}`;
+      }
+      document.cookie = `${name}=; Max-Age=0; path=/`;
+    }
+  }
+
+  function choose(choice: string) {
+    try {
+      localStorage.setItem(KEY, choice);
+    } catch {
+      // Storage blocked: the choice lasts for this page only.
+    }
+    if (choice === 'granted') {
+      window.espoirAnalytics?.load();
+    } else {
+      window.gtag?.('consent', 'update', { analytics_storage: 'denied' });
+      clearAnalyticsCookies();
+    }
+    if (banner) banner.hidden = true;
+    document.dispatchEvent(new CustomEvent('espoir:consent', { detail: choice }));
+  }
+
+  function open(focus: boolean) {
+    if (!banner) return;
+    banner.hidden = false;
+    if (focus) banner.focus();
+  }
+
+  if (banner) {
+    for (const button of banner.querySelectorAll<HTMLButtonElement>('[data-consent]')) {
+      button.addEventListener('click', () => choose(button.dataset.consent!));
+    }
+    if (!getChoice()) open(false);
+  }
+
+  // "Cookie settings" links and buttons reopen the banner.
+  document.addEventListener('click', (event) => {
+    const trigger = (event.target as Element).closest('[data-cookie-settings]');
+    if (!trigger) return;
+    event.preventDefault();
+    open(true);
+  });
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: var(--sticky-bar-height);
+    z-index: 40;
+    background: var(--white);
+    border-top: 2px solid var(--plum);
+    padding-block: var(--space-3);
+    font-size: var(--text-small);
+    line-height: 1.5;
+  }
+  @media (min-width: 48em) {
+    .cookie-banner {
+      padding-block: var(--space-4);
+    }
+  }
+  .cookie-banner[hidden] {
+    display: none;
+  }
+  .cookie-banner:focus {
+    outline: 3px solid var(--focus);
+    outline-offset: -3px;
+  }
+  .cookie-inner {
+    display: grid;
+    gap: var(--space-3);
+  }
+  @media (min-width: 56em) {
+    .cookie-inner {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: var(--space-6);
+    }
+  }
+  h2 {
+    font-size: 1rem;
+    margin-bottom: var(--space-1);
+  }
+  p {
+    margin: 0;
+  }
+  .cookie-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+</style>
