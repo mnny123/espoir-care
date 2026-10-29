@@ -4,8 +4,7 @@ The website for Espoir Care (formerly Being Human Care), a registered NDIS provi
 
 Built with [Astro](https://astro.build) as a static site with plain CSS. It deploys to GitHub Pages with GitHub Actions.
 
-- Live (for now): https://mnny123.github.io/espoir-care/
-- Final domain (placeholder): https://espoircare.com.au
+- Live: https://espoir-care.com (the old https://mnny123.github.io/espoir-care/ address forwards there)
 
 ---
 
@@ -47,7 +46,7 @@ Pull requests run the same build and tests but do not publish.
 
 ### Moving to the custom domain later
 
-1. Buy the domain. If it is not `espoircare.com.au`, change `customDomain` in `src/config/site.ts`.
+1. Buy the domain (done: espoir-care.com, registered with GoDaddy). If it ever changes, update `customDomain` in `src/config/site.ts` and `public/CNAME`.
 2. In your domain's DNS settings, point it at GitHub Pages ([GitHub's guide](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
 3. In GitHub, go to **Settings > Pages > Custom domain**, enter the domain and tick **Enforce HTTPS** once it is available.
 4. In `src/config/site.ts` set `customDomainLive: true`. This removes the `/espoir-care` path from every link, canonical tag and the sitemap.

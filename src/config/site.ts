@@ -6,9 +6,9 @@
 // ---------------------------------------------------------------------------
 export const DEPLOY = {
   // The final domain. Change this one value if you buy a different domain.
-  customDomain: 'https://espoircare.com.au',
+  customDomain: 'https://espoir-care.com',
   // Set to true once the custom domain points at GitHub Pages (see README).
-  customDomainLive: false,
+  customDomainLive: true,
   // Used until the custom domain is live.
   githubPagesSite: 'https://mnny123.github.io',
   githubPagesBase: '/espoir-care',
