@@ -8,15 +8,18 @@ interface Props {
   description: string;
   path: string;
   lead?: string;
+  /* Set once the page has been checked, for example "29 October 2026". Until then
+     the page shows the draft notice and a TODO date. */
+  updated?: string;
 }
-const { title, metaTitle, description, path, lead } = Astro.props;
+const { title, metaTitle, description, path, lead, updated } = Astro.props;
 ---
 
 <Base title={metaTitle} description={description} crumbs={[{ label: title, href: path }]}>
-  <PageHeader title={title} lead={lead} draft />
+  <PageHeader title={title} lead={lead} draft={!updated} />
   <div class="section">
     <div class="container prose legal">
-      <p class="muted">Last updated: <mark class="todo">TODO date</mark></p>
+      <p class="muted">Last updated: {updated ? updated : <mark class="todo">TODO date</mark>}</p>
       <slot />
     </div>
   </div>
