@@ -2,9 +2,7 @@
 // Run with `npm run brand` after replacing logo.png. The outputs are committed,
 // so the normal site build does not need to run this.
 //
-// The source PNG is a 768x508 screenshot. Crops are kept at native size or
-// smaller, except icon-512.png which has to be upscaled. Replace the source
-// with a larger export and re-run this script to fix that (see README).
+// The source is a 4000x2774 PNG export, so every output is downscaled.
 
 import sharp from 'sharp';
 import { writeFile } from 'node:fs/promises';
@@ -20,7 +18,8 @@ const WHITE = { r: 255, g: 255, b: 255, alpha: 1 };
 // stays fully opaque and only the edge pixels become partly transparent.
 const SOLID = 0.6;
 async function loadTransparent() {
-  const { data, info } = await sharp(SRC).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  // Flatten onto white first, so a source with a transparent background works too.
+  const { data, info } = await sharp(SRC).flatten({ background: '#ffffff' }).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   for (let i = 0; i < data.length; i += 4) {
     const a = Math.min(1, Math.max(255 - data[i], 255 - data[i + 1], 255 - data[i + 2]) / 255 / SOLID);
     if (a === 0) {
@@ -120,25 +119,28 @@ const word = await crop(img, wordBox);
 const full = await crop(img, fullBox);
 
 // Side by side lockup for the header: heart at 75% so the words stay readable.
+// Gap and baseline nudge scale with the source so any export size works.
 const markH = Math.round(markBox.height * 0.75);
 const markSmall = await sharp(mark).resize({ height: markH }).png().toBuffer();
 const markSmallW = (await sharp(markSmall).metadata()).width;
-const gap = 28;
+const gap = Math.round(markH * 0.22);
 const lockW = markSmallW + gap + wordBox.width;
 const lockH = markH;
-const horizontal = await sharp({ create: { width: lockW, height: lockH, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+const horizontalFull = await sharp({ create: { width: lockW, height: lockH, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
   .composite([
     { input: markSmall, left: 0, top: 0 },
-    { input: word, left: markSmallW + gap, top: Math.round((lockH - wordBox.height) / 2) + 6 },
+    { input: word, left: markSmallW + gap, top: Math.round((lockH - wordBox.height) / 2 + markH * 0.05) },
   ])
   .png()
   .toBuffer();
+// 240px tall: sharp at up to 4x the largest size it is shown at (60px).
+const horizontal = await sharp(horizontalFull).resize({ height: Math.min(240, lockH) }).png().toBuffer();
 
 const squareMark = await onCanvas(mark, markBox.height, markBox.height, markBox.height, { r: 0, g: 0, b: 0, alpha: 0 });
 
 const files = {
-  [`${OUT}/mark.png`]: mark,
-  [`${OUT}/logo-trimmed.png`]: full,
+  [`${OUT}/mark.png`]: await sharp(mark).resize({ height: Math.min(512, markBox.height) }).png().toBuffer(),
+  [`${OUT}/logo-trimmed.png`]: await sharp(full).resize({ width: Math.min(1200, fullBox.width) }).png().toBuffer(),
   [`${OUT}/logo-horizontal.png`]: horizontal,
   [`${OUT}/logo-horizontal-white.png`]: await toWhite(horizontal),
   'public/favicon-16x16.png': await sharp(squareMark).resize(16, 16).png().toBuffer(),
@@ -146,7 +148,7 @@ const files = {
   'public/apple-touch-icon.png': await onCanvas(mark, 180, 180, 140, WHITE),
   'public/icon-192.png': await onCanvas(mark, 192, 192, 150, WHITE),
   'public/icon-512.png': await onCanvas(mark, 512, 512, 400, WHITE),
-  'public/og-image.png': await onCanvas(full, 1200, 630, Math.max(fullBox.width, fullBox.height), PALE_LILAC),
+  'public/og-image.png': await onCanvas(full, 1200, 630, 560, PALE_LILAC),
 };
 
 files['public/favicon.ico'] = ico(

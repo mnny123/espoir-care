@@ -124,12 +124,22 @@ Almost everything lives in **`src/config/site.ts`**. Each `[TODO ...]` shows on 
 - **NDIS registered provider logo:** a commented-out slot is in `src/components/Footer.astro`. Only add it once you have confirmed you are allowed to use it.
 - **Office address:** none is shown, at your request. If you open an office for visitors, add it on the Contact page (a TODO comment marks the spot) and in `src/lib/schema.ts`.
 
-### Logo files to replace when you get a proper export
+### Logo files
 
-`public/brand/logo.png` is a 768x508 screenshot, so the heart is only about 140px wide. Everything below is cut from it by `npm run brand`. When you have a larger PNG (2000px wide or more) or an SVG, replace `public/brand/logo.png` and run `npm run brand`. This rebuilds:
+`public/brand/logo.png` is the full logo (4000x2774 PNG). Every other logo file is made from it by `npm run brand`. If the logo ever changes, replace `public/brand/logo.png` and run `npm run brand`. This rebuilds:
 
-| File | Used for | Current quality |
-| --- | --- | --- |
+| File | Used for |
+| --- | --- |
+| `public/brand/logo-horizontal.png` (1108x240) | Header logo, heart and words side by side |
+| `public/brand/logo-horizontal-white.png` | Footer logo, all white |
+| `public/brand/logo-trimmed.png` (1200 wide) | Logo in Google's structured data |
+| `public/brand/mark.png` | Heart on its own |
+| `public/favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png` | Browser tab icons |
+| `public/apple-touch-icon.png` | iPhone home screen icon |
+| `public/icon-192.png`, `public/icon-512.png` | Android home screen icons |
+| `public/og-image.png` (1200x630) | Image shown when the site is shared on social media |
+
+--- | --- | --- |
 | `public/brand/logo-horizontal.png` (579x125) | Header logo | Sharp at its current size. Soft if made larger or zoomed in a lot. |
 | `public/brand/logo-horizontal-white.png` | Footer logo (all white) | Same |
 | `public/brand/logo-trimmed.png` (448x307) | Structured data logo | Fine |
