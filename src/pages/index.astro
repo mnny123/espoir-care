@@ -7,9 +7,14 @@ import FaqList from '../components/FaqList.astro';
 import CloudPhoto from '../components/CloudPhoto.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { BUSINESS } from '../config/site';
-import { services, servicePath } from '../data/services';
+import { services, serviceBySlug } from '../data/services';
 import { url } from '../lib/url';
 import handshake from '../assets/photos/support-worker-handshake.jpg';
+
+// The most asked for services get bigger cards. The rest are listed by name below them.
+const featuredSlugs = ['disability-support-services-brisbane', 'home-personal-care', 'community-access', 'community-nursing'];
+const featured = featuredSlugs.map(serviceBySlug);
+const otherServices = services.filter((s) => !featuredSlugs.includes(s.slug));
 
 const faqs = [
   {
@@ -108,7 +113,6 @@ const audiences = [
           <li><Icon name="check" size={22} /><span>DVA contracted community nursing provider</span></li>
           <li><Icon name="check" size={22} /><span>Veterans' Home Care provider</span></li>
           <li><Icon name="check" size={22} /><span>Based in the Redlands, visiting homes across Brisbane</span></li>
-          <li><Icon name="check" size={22} /><span>Formerly Being Human Care</span></li>
         </ul>
       </aside>
     </div>
@@ -120,8 +124,12 @@ const audiences = [
         <h2 id="services-heading">How we can help</h2>
         <p>From a few hours of help each week to nursing care and support around the clock. Choose a service to find out who it is for and how it is funded.</p>
       </div>
-      <div class="grid grid--3">
-        {services.map((s) => <ServiceCard service={s} />)}
+      <div class="grid grid--2">
+        {featured.map((s) => <ServiceCard service={s} size="large" />)}
+      </div>
+      <h3 class="more-services-heading">More services</h3>
+      <div class="grid grid--3 compact-grid">
+        {otherServices.map((s) => <ServiceCard service={s} headingLevel="h4" size="compact" />)}
       </div>
       <p class="more-link"><a href={url('/services/')}>Compare all our services <Icon name="arrow-right" size={18} /></a></p>
     </div>
@@ -267,6 +275,12 @@ const audiences = [
     color: var(--plum);
     font-weight: 700;
     margin-bottom: var(--space-3);
+  }
+  .more-services-heading {
+    margin-top: var(--space-7);
+  }
+  .compact-grid {
+    gap: var(--space-3);
   }
   .more-link {
     margin-top: var(--space-6);

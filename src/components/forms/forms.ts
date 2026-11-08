@@ -62,10 +62,15 @@ function setup(form: HTMLFormElement) {
   const fields = Array.from(form.querySelectorAll<HTMLElement>('[data-field]'));
   setupReveal(form);
 
+  const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const label = button?.textContent ?? '';
+
   // Coming back with the browser's back button can restore a disabled button.
   window.addEventListener('pageshow', () => {
-    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-    if (button) button.disabled = false;
+    if (!button) return;
+    button.disabled = false;
+    button.removeAttribute('aria-busy');
+    button.textContent = label;
   });
 
   form.addEventListener('submit', (event) => {
@@ -78,8 +83,12 @@ function setup(form: HTMLFormElement) {
 
     if (!problems.length) {
       if (summary) summary.hidden = true;
-      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      if (button) button.disabled = true;
+      // Show that the form is sending, so people do not press the button again.
+      if (button) {
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+        button.textContent = 'Sending';
+      }
       return;
     }
 

@@ -102,6 +102,20 @@ dl {
   margin: 0 0 var(--space-4);
 }
 
+p,
+li,
+dd,
+figcaption {
+  text-wrap: pretty;
+}
+
+/* Numbers that line up: phone numbers, the ABN and step numbers. */
+a[href^='tel:'],
+.footer-small,
+.step-number {
+  font-variant-numeric: tabular-nums;
+}
+
 ul,
 ol {
   padding-left: 1.25em;
@@ -314,6 +328,36 @@ strong {
   color: var(--white);
 }
 
+.btn:disabled {
+  cursor: progress;
+}
+
+/* Shown on a form's send button while the form is being sent. */
+.btn[aria-busy='true']::before {
+  content: '';
+  flex: none;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A short fade and slide for things that appear after an action. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+}
+
 .btn--primary:hover {
   background: var(--purple);
   border-color: var(--purple);
@@ -368,7 +412,7 @@ strong {
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-button);
   background: var(--lavender);
   color: var(--purple);
   margin-bottom: var(--space-4);
@@ -607,6 +651,10 @@ strong {
 
 .faq .faq-answer {
   padding-bottom: var(--space-4);
+}
+
+.faq details[open] .faq-answer {
+  animation: reveal 200ms ease-out;
 }
 
 .faq .faq-answer > :last-child {
@@ -881,6 +929,11 @@ textarea {
 
 .error-summary[hidden] {
   display: none;
+}
+
+.error-summary,
+.field-error {
+  animation: reveal 200ms ease-out;
 }
 
 .error-summary-title {

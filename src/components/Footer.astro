@@ -22,7 +22,7 @@ const legal = [
         <a href={url('/')} class="footer-logo">
           <img src={url('/brand/logo-horizontal-white.png')} alt="Espoir Care home" width="1108" height="240" loading="lazy" />
         </a>
-        <p>Disability support and nursing care at home across Brisbane and the Redlands. Formerly Being Human Care.</p>
+        <p>Disability support and nursing care at home across Brisbane and the Redlands.</p>
         <!--
           TODO: Registered NDIS provider logo. Only add this once you have
           confirmed with the NDIS Quality and Safeguards Commission that you
@@ -37,7 +37,7 @@ const legal = [
           <li><Icon name="phone" size={20} /><a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a></li>
           <li><Icon name="mail" size={20} /><a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></li>
           <li><Icon name="map-pin" size={20} /><span>Based in {BUSINESS.baseArea}</span></li>
-          <li><Icon name="clock" size={20} /><span>Opening hours: <Fragment set:html={rich(BUSINESS.hours)} /></span></li>
+          <li><Icon name="clock" size={20} /><span><Fragment set:html={rich(BUSINESS.hours)} /></span></li>
         </ul>
         <p class="footer-small">
           {BUSINESS.legalName}, trading as Espoir Care<br />
@@ -91,7 +91,7 @@ const legal = [
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; {new Date().getFullYear()} {BUSINESS.legalName}, trading as Espoir Care. Formerly Being Human Care.</p>
+      <p>&copy; {new Date().getFullYear()} {BUSINESS.legalName}, trading as Espoir Care.</p>
       <p>We are not an emergency service. In an emergency, call 000.</p>
     </div>
   </div>
