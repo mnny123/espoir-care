@@ -116,6 +116,37 @@ if (faqs?.length) schemas.push(faqPage(faqs.map((f) => ({ q: f.q, a: plain(f.a) 
     <Footer />
     {!hideStickyBar && <StickyBar />}
     <CookieBanner />
+    <script>
+      // Cards and sections further down the page fade up as they scroll into
+      // view, one after another. Anything already on screen when the page
+      // opens is left alone, so nothing flickers. Skipped when the device is
+      // set to reduce motion.
+      const motionOk = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+      if (motionOk && 'IntersectionObserver' in window) {
+        const items = [
+          ...document.querySelectorAll('main .grid > *'),
+          ...document.querySelectorAll('main .section-intro, main .faq, main .cta-band, main .split > *'),
+        ];
+        const observer = new IntersectionObserver(
+          (entries) => {
+            let n = 0;
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              const el = entry.target as HTMLElement;
+              el.style.setProperty('--delay', `${Math.min(n++, 5) * 80}ms`);
+              el.classList.add('is-in');
+              observer.unobserve(el);
+            }
+          },
+          { rootMargin: '0px 0px -6% 0px' },
+        );
+        for (const el of items) {
+          if (el.getBoundingClientRect().top < window.innerHeight) continue;
+          el.classList.add('reveal');
+          observer.observe(el);
+        }
+      }
+    </script>
   </body>
 </html>
 

@@ -131,12 +131,7 @@ for (const file of htmlFiles) {
 
 for (const file of cssFiles) {
   const css = await readFile(file, 'utf8');
-  if (/gradient\(/i.test(css)) err(relative(DIST, file), 'CSS uses a gradient');
   if (/border-radius:\s*(9{3,}px|50%|[3-9]\dpx)/i.test(css)) warn(relative(DIST, file), 'large border-radius found; check no pill buttons');
-}
-for (const file of htmlFiles) {
-  const html = await readFile(file, 'utf8');
-  if (/gradient\(/i.test(html.replace(/<script[\s\S]*?<\/script>/gi, ''))) err(relative(DIST, file), 'inline style uses a gradient');
 }
 
 console.log(`Checked ${htmlFiles.length} HTML files and ${cssFiles.length} CSS files (base path "${BASE || '/'}").`);

@@ -146,6 +146,17 @@ const inServices = current.startsWith('/services/');
     position: relative;
     z-index: 20;
   }
+  /* On wide screens the header stays at the top as frosted glass. */
+  @media (min-width: 64em) {
+    .site-header {
+      position: sticky;
+      top: 0;
+      background: rgb(255 255 255 / 0.78);
+      border-bottom-color: rgb(226 220 232 / 0.7);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+  }
   .header-inner {
     display: flex;
     align-items: center;
@@ -213,12 +224,16 @@ const inServices = current.startsWith('/services/');
     text-decoration: none;
     border-radius: var(--radius-button);
     cursor: pointer;
-    transition: background-color var(--transition), color var(--transition);
+    transition:
+      background-color var(--transition),
+      color var(--transition),
+      transform var(--hover);
   }
   .nav-desktop > ul > li > a:hover,
   .dropdown summary:hover {
-    background: var(--lilac);
+    background: var(--lavender);
     color: var(--purple);
+    transform: scale(1.05);
   }
   .nav-desktop a[aria-current='page'],
   .dropdown summary.active {
@@ -247,7 +262,19 @@ const inServices = current.startsWith('/services/');
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
     padding: var(--space-4);
-    box-shadow: 0 4px 12px rgba(74, 44, 94, 0.08);
+    box-shadow: var(--shadow-lift);
+    /* Grows out of the Services button above it. */
+    transform-origin: 3rem top;
+  }
+  .dropdown[open] .dropdown-panel {
+    animation: menu-in 260ms var(--ease-out);
+  }
+  /* Scale only. Fading opacity inside an opening details element left the
+     menu see-through in Chrome after the animation ended. */
+  @keyframes menu-in {
+    from {
+      transform: translateY(-8px) scale(0.96);
+    }
   }
   .dropdown-panel ul {
     list-style: none;
@@ -303,6 +330,12 @@ const inServices = current.startsWith('/services/');
     padding: var(--space-4) var(--gutter) var(--space-5);
     max-height: calc(100vh - 110px);
     overflow-y: auto;
+    box-shadow: var(--shadow-lift);
+    /* Grows out of the Menu button, top right. */
+    transform-origin: calc(100% - 3rem) top;
+  }
+  .nav-mobile[open] .mobile-panel {
+    animation: menu-in 260ms var(--ease-out);
   }
   .mobile-links,
   .mobile-services ul {

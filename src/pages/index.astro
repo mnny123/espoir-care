@@ -215,7 +215,8 @@ const audiences = [
 
 <style>
   .hero {
-    background: var(--lilac);
+    background-color: var(--lilac);
+    --wash: var(--mesh);
     padding-block: var(--space-5) var(--space-7);
   }
   @media (min-width: 48em) {
@@ -253,8 +254,12 @@ const audiences = [
   .hero-card h2 {
     font-size: 1.25rem;
   }
+  /* Frosted glass, so the soft colours behind show through. */
   .hero-card {
-    border-color: var(--border);
+    border-color: rgb(255 255 255 / 0.7);
+    background: rgb(255 255 255 / 0.72);
+    -webkit-backdrop-filter: saturate(160%) blur(18px);
+    backdrop-filter: saturate(160%) blur(18px);
   }
   .steps {
     list-style: none;
@@ -270,7 +275,7 @@ const audiences = [
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 8px;
+    border-radius: var(--radius-button);
     background: var(--apricot);
     color: var(--plum);
     font-weight: 700;
@@ -291,6 +296,12 @@ const audiences = [
     gap: var(--space-2);
     font-weight: 700;
     min-height: var(--tap);
+  }
+  .more-link a :global(svg) {
+    transition: transform var(--hover);
+  }
+  .more-link a:hover :global(svg) {
+    transform: translateX(4px);
   }
   .card-link {
     margin-top: auto;
