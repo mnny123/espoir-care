@@ -6,6 +6,7 @@ import Reviews from '../components/Reviews.astro';
 import FaqList from '../components/FaqList.astro';
 import CloudPhoto from '../components/CloudPhoto.astro';
 import CtaBand from '../components/CtaBand.astro';
+import Sky from '../components/Sky.astro';
 import { BUSINESS } from '../config/site';
 import { services, serviceBySlug } from '../data/services';
 import { url } from '../lib/url';
@@ -97,6 +98,7 @@ const audiences = [
   faqs={faqs}
 >
   <section class="hero">
+    <Sky />
     <div class="container hero-inner">
       <div class="hero-text">
         <h1>Disability support and nursing care at home across Brisbane and the Redlands</h1>

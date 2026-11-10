@@ -115,7 +115,7 @@ for (const page of [...pages, ...extra]) {
     document.addEventListener('DOMContentLoaded', () => {
       const style = document.createElement('style');
       style.textContent =
-        '.hero::before,.hero::after,.page-header::before,.page-header::after,.section--lilac::before,.section--lilac::after,.cta-band::before,.cta-band::after,.site-footer::before,.site-footer::after{display:none!important}.site-header{background:#fff!important;backdrop-filter:none!important}.hero-card{background:#fff!important;backdrop-filter:none!important}';
+        '.hero::before,.hero::after,.page-header::before,.page-header::after,.section--lilac::before,.section--lilac::after,.cta-band::before,.cta-band::after,.site-footer::before,.site-footer::after{display:none!important}.site-header{background:#fff!important;backdrop-filter:none!important}.hero-card{background:#fff!important;backdrop-filter:none!important}.sky{display:none!important}';
       document.head.append(style);
     });
   });
