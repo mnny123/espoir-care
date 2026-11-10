@@ -69,7 +69,7 @@ const gaEnabled = true;
       } catch (e) {}
       document.documentElement.classList.add('js');
     })();</script>
-  <link rel="stylesheet" href="/_astro/Base.DZh9APFn.css">
+  <link rel="stylesheet" href="/_astro/Base.Cym7zMvm.css">
 <style>.legal[data-astro-cid-sb6l2mzp] h2{font-size:1.5rem}.legal[data-astro-cid-sb6l2mzp] h3{font-size:1.2rem}.legal[data-astro-cid-sb6l2mzp] table{border-collapse:collapse;width:100%;margin-bottom:var(--space-5);font-size:var(--text-small)}.legal[data-astro-cid-sb6l2mzp] th,.legal[data-astro-cid-sb6l2mzp] td{text-align:left;vertical-align:top;border-bottom:1px solid var(--border);padding:var(--space-3) var(--space-2)}.legal[data-astro-cid-sb6l2mzp] th{color:var(--plum)}.legal[data-astro-cid-sb6l2mzp] .table-wrap{overflow-x:auto}
 </style></head>
   <body class="has-sticky-bar" data-astro-cid-hkbrpulz>
@@ -643,5 +643,6 @@ const gaEnabled = true;
 </section>
 
 <script type="module">var e=`espoir-consent`,t=document.querySelector(`[data-cookie-banner]`);function n(){try{return localStorage.getItem(e)}catch{return null}}function r(){for(let e of document.cookie.split(`;`)){let t=e.split(`=`)[0].trim();if(!t.startsWith(`_ga`))continue;let n=location.hostname.split(`.`);for(let e=0;e<n.length-1;e++){let r=n.slice(e).join(`.`);document.cookie=`${t}=; Max-Age=0; path=/; domain=${r}`}document.cookie=`${t}=; Max-Age=0; path=/`}}function i(n){try{localStorage.setItem(e,n)}catch{}n===`granted`?window.espoirAnalytics?.load():(window.gtag?.(`consent`,`update`,{analytics_storage:`denied`}),r()),t&&(t.hidden=!0),document.dispatchEvent(new CustomEvent(`espoir:consent`,{detail:n}))}function a(e){t&&(t.hidden=!1,e&&t.focus())}if(t){for(let e of t.querySelectorAll(`[data-consent]`))e.addEventListener(`click`,()=>i(e.dataset.consent));n()||a(!1)}document.addEventListener(`click`,e=>{e.target.closest(`[data-cookie-settings]`)&&(e.preventDefault(),a(!0))});</script>
+    <script type="module">if(window.matchMedia(`(prefers-reduced-motion: no-preference)`).matches&&`IntersectionObserver`in window){let e=[...document.querySelectorAll(`main .grid > *`),...document.querySelectorAll(`main .section-intro, main .faq, main .cta-band, main .split > *`)],t=new IntersectionObserver(e=>{let n=0;for(let r of e){if(!r.isIntersecting)continue;let e=r.target;e.style.setProperty(`--delay`,`${Math.min(n++,5)*80}ms`),e.classList.add(`is-in`),t.unobserve(e)}},{rootMargin:`0px 0px -6% 0px`});for(let n of e)n.getBoundingClientRect().top<window.innerHeight||(n.classList.add(`reveal`),t.observe(n))}</script>
   </body>
 </html>
